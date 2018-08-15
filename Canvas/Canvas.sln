@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2002
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas", "Canvas\Canvas\Canvas.csproj", "{7E711C7B-41DC-46AE-9A06-0FEB6FF996B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas", "Canvas\Canvas.csproj", "{7E711C7B-41DC-46AE-9A06-0FEB6FF996B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTools", "CommonTools\CommonTools.csproj", "{6D83410F-1413-4671-994C-AF095C3E5937}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTools", "..\CommonTools\CommonTools.csproj", "{6D83410F-1413-4671-994C-AF095C3E5937}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8E17D932-889B-4F5A-A171-49C1311B0E3C}
+		SolutionGuid = {D72321E3-5F6D-41CA-A320-53FBA543824F}
 	EndGlobalSection
 EndGlobal
