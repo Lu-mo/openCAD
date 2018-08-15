@@ -91,6 +91,7 @@
     <Compile Include="DrawTools\ArcCircleTool.cs" />
     <Compile Include="DrawTools\DrawToolsUtils.cs" />
     <Compile Include="DrawTools\LineTool.cs" />
+    <Compile Include="DrawTools\RectangleTool.cs" />
     <Compile Include="DrawTools\SnapPoints.cs" />
     <Compile Include="EditTools\LineShrinkExtendEditTool.cs" />
     <Compile Include="EditTools\LinesMeetEditTool.cs" />
