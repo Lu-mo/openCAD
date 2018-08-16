@@ -10,4 +10,3 @@ BackgroundLayer： 52行draw5x5
 DrawingLayer：184行 SnapPoint5x5
 BackgroundLayer ：75行SnapPoint5x5
 快照=捕捉点
-11111132132165432132
