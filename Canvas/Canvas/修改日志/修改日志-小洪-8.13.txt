@@ -1,0 +1,12 @@
+Gridlayer：public void Draw(ICanvas canvas, RectangleF unitrect) 98行
+canvas：OnMouseWheel， 731行
+canvas：overside() 633行
+canvas：OnMouseMove 684 行 692行 708行
+canvas：OnPaint 291行
+canvasInterfaces：71行 void draw5x5
+canvasInterfaces：73行 SnapPoint5x5
+DrawingLayer： 68行 draw5x5
+BackgroundLayer： 52行draw5x5
+DrawingLayer：184行 SnapPoint5x5
+BackgroundLayer ：75行SnapPoint5x5
+快照=捕捉点

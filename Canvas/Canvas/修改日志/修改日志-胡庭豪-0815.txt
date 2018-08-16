@@ -1,0 +1,5 @@
+MainWin:
+	14,15行新增代码;
+	198行OpenDocument方法更改;
+	294行新增MainWin_MdiChildActivate事件，对应在Designer中添加事件监听(MainWin.Designer.cs的150行)
+附加整个ProgramStatus项目

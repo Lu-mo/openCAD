@@ -1,0 +1,37 @@
+修改完成后存在的问题有,snappoint过于灵敏且有错误,放大缩小只有化矩形是两个点有效,保存xml应该正常但读取有错误
+1.在canvas/drawtool中添加RectangleTool.cs
+2.在CanvasInterfaces.cs中添加接口void DrawRectangle(ICanvas canvas, Pen pen, UnitPoint m_p1, UnitPoint m_p2);
+3.在canvas.canvasWrapper添加以调用CanvasCtrl.DrawRectangle
+public void DrawRectangle(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2)
+{
+	m_canvas.DrawRectangle(canvas, pen, p1, p2);
+}
+4.在CanvasCtrl中添加以真正绘制矩形
+public void DrawRectangle(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2)
+        {
+            PointF tmpp1 = ToScreen(p1);
+            PointF tmpp2 = ToScreen(p2);
+            double x1 = tmpp1.X > tmpp2.X ? tmpp1.X : tmpp2.X;
+            double x2 = tmpp1.X > tmpp2.X ? tmpp2.X : tmpp1.X;
+            double y1 = tmpp1.Y > tmpp2.Y ? tmpp1.Y : tmpp2.Y;
+            double y2 = tmpp1.Y > tmpp2.Y ? tmpp2.Y : tmpp1.Y;
+            RectangleF[] rectangleF = new RectangleF[1];
+            rectangleF[0] = new RectangleF(Convert.ToSingle(x2), Convert.ToSingle(y2), Convert.ToSingle(x1 - x2), Math.Abs(Convert.ToSingle(y1 - y2)));
+            canvas.Graphics.DrawRectangles(pen, rectangleF);
+        }
+5.在documentForm中添加以显示矩形工具按钮及菜单
+5.1 #region 添加的矩形工具
+
+            mmitem = m_menuItems.GetItem("Rectangle");
+            mmitem.Text = "Rectangle";
+            mmitem.ToolTipText = "Rectangle (R)";
+            //mmitem.Image = ;
+            mmitem.Click += new EventHandler(OnToolSelect);
+            mmitem.SingleKey = Keys.R;
+            mmitem.ShortcutKeyDisplayString = "R";
+            mmitem.Tag = "rectangle";
+            m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.RectangleEdit());
+
+	#endregion
+5.2 strip.Items.Add(m_menuItems.GetItem("Rectangle").CreateButton());//矩形工具
+5.3 menu.DropDownItems.Add(m_menuItems.GetItem("Rectangle").CreateMenuItem());//矩形工具
