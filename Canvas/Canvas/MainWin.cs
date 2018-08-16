@@ -301,7 +301,7 @@ namespace Canvas
             //仅判断被关闭的状态
             if (f.Disposing)
             {
-                //仅为文档名不为空（限制用户保存文档名）
+                //仅文档名不为空（防止文档为空）
                 if (!string.IsNullOrEmpty(f.m_filename))
                 {
                     foreach (string pathTemp in filePathList)
