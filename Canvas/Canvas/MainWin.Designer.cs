@@ -76,6 +76,7 @@ namespace Canvas
             // 
             // m_mainMenu
             // 
+            this.m_mainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem,
             this.m_windowMenu,
@@ -83,7 +84,8 @@ namespace Canvas
             this.m_mainMenu.Location = new System.Drawing.Point(0, 0);
             this.m_mainMenu.MdiWindowListItem = this.m_windowMenu;
             this.m_mainMenu.Name = "m_mainMenu";
-            this.m_mainMenu.Size = new System.Drawing.Size(803, 25);
+            this.m_mainMenu.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.m_mainMenu.Size = new System.Drawing.Size(1071, 28);
             this.m_mainMenu.TabIndex = 0;
             // 
             // optionsToolStripMenuItem
@@ -92,13 +94,13 @@ namespace Canvas
             this.optionsToolStripMenuItem1,
             this.layersToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.optionsToolStripMenuItem.Text = "选项";
             // 
             // optionsToolStripMenuItem1
             // 
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(114, 26);
             this.optionsToolStripMenuItem1.Tag = "Grid";
             this.optionsToolStripMenuItem1.Text = "网格";
             this.optionsToolStripMenuItem1.Click += new System.EventHandler(this.OnOptions);
@@ -106,7 +108,7 @@ namespace Canvas
             // layersToolStripMenuItem
             // 
             this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
-            this.layersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.layersToolStripMenuItem.Size = new System.Drawing.Size(114, 26);
             this.layersToolStripMenuItem.Tag = "Layers";
             this.layersToolStripMenuItem.Text = "图层";
             this.layersToolStripMenuItem.Click += new System.EventHandler(this.OnOptions);
@@ -114,7 +116,7 @@ namespace Canvas
             // m_windowMenu
             // 
             this.m_windowMenu.Name = "m_windowMenu";
-            this.m_windowMenu.Size = new System.Drawing.Size(67, 21);
+            this.m_windowMenu.Size = new System.Drawing.Size(51, 24);
             this.m_windowMenu.Text = "窗口";
             this.m_windowMenu.DropDownOpening += new System.EventHandler(this.OnUpdateMenuUI);
             // 
@@ -123,27 +125,29 @@ namespace Canvas
             this.m_helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_aboutMenuItem});
             this.m_helpMenu.Name = "m_helpMenu";
-            this.m_helpMenu.Size = new System.Drawing.Size(47, 21);
+            this.m_helpMenu.Size = new System.Drawing.Size(51, 24);
             this.m_helpMenu.Text = "帮助";
             // 
             // m_aboutMenuItem
             // 
             this.m_aboutMenuItem.Name = "m_aboutMenuItem";
-            this.m_aboutMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.m_aboutMenuItem.Size = new System.Drawing.Size(114, 26);
             this.m_aboutMenuItem.Text = "关于";
             this.m_aboutMenuItem.Click += new System.EventHandler(this.OnAbout);
             // 
             // MainWin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 470);
+            this.ClientSize = new System.Drawing.Size(1071, 588);
             this.Controls.Add(this.m_mainMenu);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.m_mainMenu;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainWin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainWin";
+            this.MdiChildActivate += new System.EventHandler(this.MainWin_MdiChildActivate);
             this.m_mainMenu.ResumeLayout(false);
             this.m_mainMenu.PerformLayout();
             this.ResumeLayout(false);

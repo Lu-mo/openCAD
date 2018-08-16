@@ -114,6 +114,11 @@ namespace Canvas
 		{
 			m_canvas.DrawLine(canvas, pen, p1, p2);
 		}
+
+        public void DrawRectangle(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2)
+        {
+            m_canvas.DrawRectangle(canvas, pen, p1, p2);
+        }
         /// <summary>
         /// ª≠ª°
         /// </summary>
@@ -942,10 +947,22 @@ namespace Canvas
 			if (radius > 0 && radius < 1e8f )
 				canvas.Graphics.DrawArc(pen, r, -startAngle, -sweepAngle);
 		}
+        public void DrawRectangle(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2)
+        {
+            PointF tmpp1 = ToScreen(p1);
+            PointF tmpp2 = ToScreen(p2);
+            double x1 = tmpp1.X > tmpp2.X ? tmpp1.X : tmpp2.X;
+            double x2 = tmpp1.X > tmpp2.X ? tmpp2.X : tmpp1.X;
+            double y1 = tmpp1.Y > tmpp2.Y ? tmpp1.Y : tmpp2.Y;
+            double y2 = tmpp1.Y > tmpp2.Y ? tmpp2.Y : tmpp1.Y;
+            RectangleF[] rectangleF = new RectangleF[1];
+            rectangleF[0] = new RectangleF(Convert.ToSingle(x2), Convert.ToSingle(y2), Convert.ToSingle(x1 - x2), Math.Abs(Convert.ToSingle(y1 - y2)));
+            canvas.Graphics.DrawRectangles(pen, rectangleF);
+        }
 
-		#endregion
+        #endregion
 
-		Dictionary<float, Dictionary<Color, Pen>> m_penCache = new Dictionary<float,Dictionary<Color,Pen>>();
+        Dictionary<float, Dictionary<Color, Pen>> m_penCache = new Dictionary<float,Dictionary<Color,Pen>>();
         /// <summary>
         /// …Ë÷√ª≠± ¥÷œ∏—’…´
         /// </summary>
@@ -1192,5 +1209,7 @@ namespace Canvas
 			}
 			UpdateCursor();
 		}
-	}
+
+        
+    }
 }

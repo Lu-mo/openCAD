@@ -16,7 +16,7 @@ namespace Canvas
 
 		MenuItemManager m_menuItems = new MenuItemManager();
 		
-		string m_filename = string.Empty;   //文件名
+		public string m_filename = string.Empty;   //文件名
 
         /// <summary>
         /// 文件初始化
@@ -169,7 +169,21 @@ namespace Canvas
 			mmitem.Tag = "singleline";
 			m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.LineEdit(true));
 
-			mmitem = m_menuItems.GetItem("Circle2P");
+            #region 添加的矩形工具
+
+            mmitem = m_menuItems.GetItem("Rectangle");
+            mmitem.Text = "Rectangle";
+            mmitem.ToolTipText = "Rectangle (R)";
+            //mmitem.Image = ;
+            mmitem.Click += new EventHandler(OnToolSelect);
+            mmitem.SingleKey = Keys.R;
+            mmitem.ShortcutKeyDisplayString = "R";
+            mmitem.Tag = "rectangle";
+            m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.RectangleEdit());
+
+            #endregion
+
+            mmitem = m_menuItems.GetItem("Circle2P");
 			mmitem.Text = "Circle 2P";
 			mmitem.ToolTipText = "Circle 2 point";
 			mmitem.Image = DrawToolsImages16x16.Image(DrawToolsImages16x16.eIndexes.Circle2P);
@@ -223,7 +237,8 @@ namespace Canvas
 
 			ToolStrip strip = m_menuItems.GetStrip("draw");
 			strip.Items.Add(m_menuItems.GetItem("Lines").CreateButton());
-			strip.Items.Add(m_menuItems.GetItem("Circle2P").CreateButton());
+            strip.Items.Add(m_menuItems.GetItem("Rectangle").CreateButton());//矩形工具
+            strip.Items.Add(m_menuItems.GetItem("Circle2P").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("CircleCR").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("Arc2P").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("ArcCR").CreateButton());
@@ -236,7 +251,8 @@ namespace Canvas
 			menu.Text = "Draw &Tools";
 			menu.DropDownItems.Add(m_menuItems.GetItem("Lines").CreateMenuItem());
 			menu.DropDownItems.Add(m_menuItems.GetItem("Line").CreateMenuItem());
-			menu.DropDownItems.Add(m_menuItems.GetItem("Circle2P").CreateMenuItem());
+            menu.DropDownItems.Add(m_menuItems.GetItem("Rectangle").CreateMenuItem());//矩形工具
+            menu.DropDownItems.Add(m_menuItems.GetItem("Circle2P").CreateMenuItem());
 			menu.DropDownItems.Add(m_menuItems.GetItem("CircleCR").CreateMenuItem());
 			menu.DropDownItems.Add(m_menuItems.GetItem("Arc2P").CreateMenuItem());
 			menu.DropDownItems.Add(m_menuItems.GetItem("ArcCR").CreateMenuItem());
@@ -331,6 +347,8 @@ namespace Canvas
 		{
 			return m_menuItems.GetStrip(id);
 		}
+
+
 
 		public void Save()
 		{
