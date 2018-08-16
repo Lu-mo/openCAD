@@ -291,10 +291,17 @@ namespace Canvas
             }
         }
 
+        /// <summary>
+        /// mdi子窗体活动事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWin_MdiChildActivate(object sender, EventArgs e)
         {
+            //仅判断被关闭的状态
             if (f.Disposing)
             {
+                //仅为文档名不为空（限制用户保存文档名）
                 if (!string.IsNullOrEmpty(f.m_filename))
                 {
                     foreach (string pathTemp in filePathList)
