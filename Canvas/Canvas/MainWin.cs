@@ -314,7 +314,6 @@ namespace Canvas
                     filePathList.Add(f.m_filename);
                 }
             }
-;
         }
     }
 }
