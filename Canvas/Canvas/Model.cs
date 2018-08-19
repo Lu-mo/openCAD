@@ -14,7 +14,7 @@ namespace Canvas
 	{
 		static Dictionary<string, Type> m_toolTypes = new Dictionary<string,Type>();
         /// <summary>
-        /// 新建绘图工具？？？
+        /// 新建绘图图形
         /// </summary>
         /// <param name="objecttype"></param>
         /// <returns></returns>
@@ -77,7 +77,8 @@ namespace Canvas
 			m_toolTypes[DrawTools.Circle.ObjectType] = typeof(DrawTools.Circle);
 			m_toolTypes[DrawTools.Arc.ObjectType] = typeof(DrawTools.Arc);
 			m_toolTypes[DrawTools.Arc3Point.ObjectType] = typeof(DrawTools.Arc3Point);
-			DefaultLayer();
+            m_toolTypes[DrawTools.Rectangle.ObjectType] = typeof(DrawTools.Rectangle);
+            DefaultLayer();
 			m_centerPoint = new UnitPoint(0,0);
 		}
 		public void AddDrawTool(string key, IDrawObject drawtool)

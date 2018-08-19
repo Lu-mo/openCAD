@@ -1,0 +1,6 @@
+修正了[保存矩形不能读取的问题，修正了矩形中点快照点]
+未修复[放大缩小只有化矩形是两个点有效]
+1.model.cs 添加
+m_toolTypes[DrawTools.Rectangle.ObjectType] = typeof(DrawTools.Rectangle);
+保证xml读取矩形正常
+2.大面积修正了RectangleTool.cs

@@ -21,10 +21,6 @@ namespace Canvas.DrawTools
         UnitPoint m_originalPoint;
         UnitPoint m_endPoint;
         ePoint m_pointId;
-        static double xLeft;
-        static double yTop;
-        static double widthMax;
-        double HeightMax;
         
         /// <summary>
         /// 赋值,初始化图形开始点
@@ -159,7 +155,7 @@ namespace Canvas.DrawTools
 
     class Rectangle : DrawObjectBase, IDrawObject, ISerialize
     {
-        protected UnitPoint m_p1, m_p2;
+        protected UnitPoint m_p1, m_p2,m_p3,m_p4;
 
         public Rectangle()
         {
@@ -223,6 +219,10 @@ namespace Canvas.DrawTools
             base.Copy(acopy);
             m_p1 = acopy.m_p1;
             m_p2 = acopy.m_p2;
+
+            m_p3 = acopy.m_p3;
+            m_p4 = acopy.m_p4;
+
             Selected = acopy.Selected;
         }
 
@@ -239,7 +239,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 从模型中初始化矩形(点状)
+        /// 从模型中初始化矩形(点状),可能与从xml中恢复有关
         /// </summary>
         /// <param name="point"></param>
         /// <param name="layer"></param>
@@ -249,7 +249,9 @@ namespace Canvas.DrawTools
             P1 = P2 = point;
             Width = layer.Width;
             Color = layer.Color;
+            //OnMouseDown(null, point, snap);
             Selected = true;
+            //Console.WriteLine(""+point.X+" "+point.Y);
         }
 
         /// <summary>
@@ -265,43 +267,43 @@ namespace Canvas.DrawTools
             //MessageBox.Show("Mid");
             UnitPoint p3 = new UnitPoint(p1.X, p2.Y);
             UnitPoint p4 = new UnitPoint(p2.X, p1.Y);
-            //UnitPoint mid1 = HitUtil.LineMidpoint(p1, p3);
-            //UnitPoint mid2 = HitUtil.LineMidpoint(p1, p4);
-            //UnitPoint mid3 = HitUtil.LineMidpoint(p3, p2);
-            //UnitPoint mid4 = HitUtil.LineMidpoint(p4, p2);
-            //UnitPoint mid5 = HitUtil.LineMidpoint(p1, p2);
-            UnitPoint mid6 = HitUtil.LineMidpoint(p3, p3);
-            UnitPoint mid7 = HitUtil.LineMidpoint(p4, p4);
+            UnitPoint mid1 = HitUtil.LineMidpoint(p1, p3);
+            UnitPoint mid2 = HitUtil.LineMidpoint(p1, p4);
+            UnitPoint mid3 = HitUtil.LineMidpoint(p3, p2);
+            UnitPoint mid4 = HitUtil.LineMidpoint(p4, p2);
+            UnitPoint mid5 = HitUtil.LineMidpoint(p1, p2);
+            //UnitPoint mid6 = HitUtil.LineMidpoint(p3, p3);
+            //UnitPoint mid7 = HitUtil.LineMidpoint(p4, p4);
             float thWidth = ThresholdWidth(canvas, Width);
-            Console.WriteLine("thWidth"+thWidth+"");
-            //if (HitUtil.CircleHitPoint(mid1, thWidth, hitpoint))
-            //{
-            //    return mid1;
-            //}
-            //if (HitUtil.CircleHitPoint(mid2, thWidth, hitpoint))
-            //{
-            //    return mid2;
-            //}
-            //if (HitUtil.CircleHitPoint(mid3, thWidth, hitpoint))
-            //{
-            //    return mid3;
-            //}
-            //if (HitUtil.CircleHitPoint(mid4, thWidth, hitpoint))
-            //{
-            //    return mid4;
-            //}
-            //if (HitUtil.CircleHitPoint(mid5, thWidth, hitpoint))
-            //{
-            //    return mid5;
-            //}
-            if (HitUtil.CircleHitPoint(mid6, thWidth, hitpoint))
+            //Console.WriteLine("thWidth"+thWidth+"");
+            if (HitUtil.CircleHitPoint(mid1, thWidth, hitpoint))
             {
-                return mid6;
+                return mid1;
             }
-            if (HitUtil.CircleHitPoint(mid7, thWidth, hitpoint))
+            if (HitUtil.CircleHitPoint(mid2, thWidth, hitpoint))
             {
-                return mid7;
+                return mid2;
             }
+            if (HitUtil.CircleHitPoint(mid3, thWidth, hitpoint))
+            {
+                return mid3;
+            }
+            if (HitUtil.CircleHitPoint(mid4, thWidth, hitpoint))
+            {
+                return mid4;
+            }
+            if (HitUtil.CircleHitPoint(mid5, thWidth, hitpoint))
+            {
+                return mid5;
+            }
+            //if (HitUtil.CircleHitPoint(mid6, thWidth, hitpoint))
+            //{
+            //    return mid6;
+            //}
+            //if (HitUtil.CircleHitPoint(mid7, thWidth, hitpoint))
+            //{
+            //    return mid7;
+            //}
 
             return UnitPoint.Empty;
         }
@@ -319,58 +321,31 @@ namespace Canvas.DrawTools
         /// <param name="canvas"></param>
         /// <param name="unitrect"></param>
         public virtual void Draw(ICanvas canvas, RectangleF unitrect)
-        {
-
-            //canvas.Invalidate();            
+        {        
             Color color = Color;
             Pen pen = canvas.CreatePen(color, Width);
-            //pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-            //pen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            //canvas.DrawLine(canvas, pen, m_p1, m_p2);
-            //UnitPoint p3 = new UnitPoint(m_p1.X, m_p2.Y);
-            //UnitPoint p4 = new UnitPoint(m_p2.X, m_p1.Y);
             canvas.DrawRectangle(canvas, pen, m_p1, m_p2);
             if (Highlighted)//如果高亮
             {
                 canvas.DrawRectangle(canvas, DrawUtils.SelectedPen, m_p1, m_p2);//画线
-                //UnitPoint p3 = new UnitPoint(m_p1.X,m_p2.Y);
-                //UnitPoint p4 = new UnitPoint(m_p2.X, m_p1.Y);
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, m_p1, p3);//画线
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, m_p1, p4);//画线
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, p3, m_p2);//画线
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, p4, m_p2);//画线
-
             }
     
-            if (Selected)   //如果被选中
+            if (Selected)   //如果被选中，包括画图期间
             {
                 canvas.DrawRectangle(canvas, DrawUtils.SelectedPen, m_p1, m_p2);//画线
-                //UnitPoint p3 = new UnitPoint(m_p1.X, m_p2.Y);
-                //UnitPoint p4 = new UnitPoint(m_p2.X, m_p1.Y);
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, m_p1, p3);//画线
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, m_p1, p4);//画线
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, p3, m_p2);//画线
-                //canvas.DrawLine(canvas, DrawUtils.SelectedPen, p4, m_p2);//画线
                 if (m_p1.IsEmpty == false)//如果端点p1不存在
                     DrawUtils.DrawNode(canvas, m_p1);//画点
                 if (m_p2.IsEmpty == false)//如果端点p2不存在
                     DrawUtils.DrawNode(canvas, m_p2);//画点
                 //MessageBox.Show("");
             }
-            //if(Selected==false)
-            //{
-            //    canvas.DrawLine(canvas, pen, m_p1, p3);//画线
-            //    canvas.DrawLine(canvas, pen, m_p1, p4);//画线
-            //    canvas.DrawLine(canvas, pen, p3, m_p2);//画线
-            //    canvas.DrawLine(canvas, pen, p4, m_p2);//画线
-            //}
-            
+           
         }
 
         public RectangleF GetBoundingRect(ICanvas canvas)
         {
             float r =Convert.ToSingle(Math.Sqrt((Math.Pow((m_p1.X - m_p2.X),2.0)+ Math.Pow((m_p1.Y - m_p2.Y), 2.0))/2));
-            Console.WriteLine(r+" ");
+            //Console.WriteLine(r+" ");
             RectangleF rect = HitUtil.CircleBoundingRect(new UnitPoint((m_p1.X+m_p2.X)/2.0, (m_p1.Y + m_p2.Y) / 2.0), r);
             // if drawing either angle then include the mouse point in the ractangle - this is to redraw (erase) the line drawn
             // from center point to mouse point
@@ -547,12 +522,18 @@ namespace Canvas.DrawTools
             {
                 foreach (Type snaptype in runningsnaptypes)
                 {
+                    m_p3 = new UnitPoint(m_p1.X,m_p2.Y);
+                    m_p4 = new UnitPoint(m_p2.X, m_p1.Y);
                     if (snaptype == typeof(VertextSnapPoint))
                     {
                         if (HitUtil.CircleHitPoint(m_p1, thWidth, point))
                             return new VertextSnapPoint(canvas, this, m_p1);
                         if (HitUtil.CircleHitPoint(m_p2, thWidth, point))
                             return new VertextSnapPoint(canvas, this, m_p2);
+                        if (HitUtil.CircleHitPoint(m_p3, thWidth, point))
+                            return new VertextSnapPoint(canvas, this, m_p3);
+                        if (HitUtil.CircleHitPoint(m_p4, thWidth, point))
+                            return new VertextSnapPoint(canvas, this, m_p4);
                     }
                     if (snaptype == typeof(MidpointSnapPoint))
                     {
@@ -562,12 +543,37 @@ namespace Canvas.DrawTools
                     }
                     if (snaptype == typeof(IntersectSnapPoint))
                     {
-                        Rectangle rectangle = Utils.FindObjectTypeInList(this, otherobj, typeof(Rectangle)) as Rectangle;
-                        if (rectangle == null)
-                            continue;
-                        UnitPoint p = HitUtil.LinesIntersectPoint(m_p1, m_p2, rectangle.m_p1, rectangle.m_p2);
-                        if (p != UnitPoint.Empty)
-                            return new IntersectSnapPoint(canvas, this, p);
+                        return null;
+                        //Rectangle rectangle = Utils.FindObjectTypeInList(this, otherobj, typeof(Rectangle)) as Rectangle;
+
+                        //if (rectangle == null)
+                        //    continue;
+                        //UnitPoint m_p3t = new UnitPoint(rectangle.m_p1.X, rectangle.m_p2.Y);
+                        //UnitPoint m_p4t = new UnitPoint(rectangle.m_p2.X, rectangle.m_p1.Y);
+                        //UnitPoint p=HitUtil.LinesIntersectPoint(m_p1, m_p3, rectangle.m_p1, m_p4t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
+                        //p = HitUtil.LinesIntersectPoint(m_p1, m_p3, rectangle.m_p2, m_p3t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
+                        //p = HitUtil.LinesIntersectPoint(m_p1, m_p4, rectangle.m_p2, m_p4t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
+                        //p = HitUtil.LinesIntersectPoint(m_p1, m_p4, rectangle.m_p1, m_p3t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
+                        //p = HitUtil.LinesIntersectPoint(m_p2, m_p3, rectangle.m_p2, m_p4t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
+                        //p = HitUtil.LinesIntersectPoint(m_p2, m_p3, rectangle.m_p1, m_p3t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
+                        //p = HitUtil.LinesIntersectPoint(m_p2, m_p4, rectangle.m_p1, m_p4t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
+                        //p = HitUtil.LinesIntersectPoint(m_p2, m_p4, rectangle.m_p2, m_p3t);
+                        //if (p != UnitPoint.Empty)
+                        //    return new IntersectSnapPoint(canvas, this, p);
                     }
                 }
                 return null;
