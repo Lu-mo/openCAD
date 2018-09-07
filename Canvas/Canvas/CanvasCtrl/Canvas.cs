@@ -119,6 +119,10 @@ namespace Canvas
         {
             m_canvas.DrawRectangle(canvas, pen, p1, p2);
         }
+        public void DrawBezier(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2, UnitPoint p3, UnitPoint p4)
+        {
+            m_canvas.DrawBezier(canvas, pen, p1, p2,p3,p4);
+        }
         /// <summary>
         /// »­»¡
         /// </summary>
@@ -958,6 +962,15 @@ namespace Canvas
             RectangleF[] rectangleF = new RectangleF[1];
             rectangleF[0] = new RectangleF(Convert.ToSingle(x2), Convert.ToSingle(y2), Convert.ToSingle(x1 - x2), Math.Abs(Convert.ToSingle(y1 - y2)));
             canvas.Graphics.DrawRectangles(pen, rectangleF);
+        }
+
+        public void DrawBezier(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2, UnitPoint p3, UnitPoint p4)
+        {
+            PointF tmpp1 = ToScreen(p1);
+            PointF tmpp2 = ToScreen(p2);
+            PointF tmpp3 = ToScreen(p3);
+            PointF tmpp4 = ToScreen(p4);
+            canvas.Graphics.DrawBezier(pen, tmpp1, tmpp2, tmpp3, tmpp4);
         }
 
         #endregion

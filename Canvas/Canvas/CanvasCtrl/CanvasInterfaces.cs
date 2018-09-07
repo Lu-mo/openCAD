@@ -30,6 +30,7 @@ namespace Canvas
 		void DrawLine(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2);
 		void DrawArc(ICanvas canvas, Pen pen, UnitPoint center, float radius, float beginangle, float angle);
         void DrawRectangle(ICanvas canvas, Pen pen, UnitPoint m_p1, UnitPoint m_p2);
+        void DrawBezier(ICanvas canvas, Pen pen, UnitPoint m_p1, UnitPoint m_p2, UnitPoint m_p3, UnitPoint m_p4);
     }
 	public interface IModel
 	{

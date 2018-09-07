@@ -459,6 +459,7 @@ namespace Canvas.DrawTools
         /// </summary>
 		public void UpdateArcFrom3Points()
 		{
+            //Console.WriteLine("UpdateArcFrom3Points()");
 			m_center = HitUtil.CenterPointFrom3Points(m_p1, m_p2, m_p3);
 			m_radius = (float)HitUtil.Distance(m_center, m_p1);
 			StartAngle = (float)HitUtil.RadiansToDegrees(HitUtil.LineAngleR(m_center, m_p1, 0));

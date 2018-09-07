@@ -1,0 +1,34 @@
+﻿1.添加BezierCurveTool.cs
+2.CanvasInterface.cs中Canvas.ICanvas
+添加 void DrawBezier(ICanvas canvas, Pen pen, UnitPoint m_p1, UnitPoint m_p2, UnitPoint m_p3, UnitPoint m_p4);
+3.Canvas.cs添加
+public void DrawBezier(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2, UnitPoint p3, UnitPoint p4)
+{
+            m_canvas.DrawBezier(canvas, pen, p1, p2,p3,p4);
+}
+4.在CanvasCtrl中添加以真正绘制
+public void DrawBezier(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2, UnitPoint p3, UnitPoint p4)
+{
+            PointF tmpp1 = ToScreen(p1);
+            PointF tmpp2 = ToScreen(p2);
+            PointF tmpp3 = ToScreen(p3);
+            PointF tmpp4 = ToScreen(p4);
+            canvas.Graphics.DrawBezier(pen, tmpp1, tmpp2, tmpp3, tmpp4);
+}
+
+5.在documentForm中添加以显示矩形工具按钮及菜单
+5.1 #region 添加的贝塞尔曲线工具
+
+            mmitem = m_menuItems.GetItem("BezierCurve");
+            mmitem.Text = "BezierCurve";
+            mmitem.ToolTipText = "BezierCurve (B)";
+            //mmitem.Image = ;
+            mmitem.Click += new EventHandler(OnToolSelect);
+            mmitem.SingleKey = Keys.B;
+            mmitem.ShortcutKeyDisplayString = "B";
+            mmitem.Tag = "BezierCurve";
+            m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.BezierCurveEdit());
+
+    #endregion
+5.2 strip.Items.Add(m_menuItems.GetItem("BezierCurve").CreateButton());//Bezier curve工具
+5.3 menu.DropDownItems.Add(m_menuItems.GetItem("BezierCurve").CreateMenuItem());//Bezier curve工具

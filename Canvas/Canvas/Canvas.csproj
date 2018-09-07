@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="DrawTools\ArcCircle3PointTool.cs" />
     <Compile Include="DrawTools\ArcCircleTool.cs" />
+    <Compile Include="DrawTools\BezierCurveTool.cs" />
     <Compile Include="DrawTools\DrawToolsUtils.cs" />
     <Compile Include="DrawTools\LineTool.cs" />
     <Compile Include="DrawTools\RectangleTool.cs" />
@@ -218,6 +219,7 @@
     <Content Include="修改日志\修改文档-杨锌彤-8-16.txt" />
     <Content Include="修改日志\修改日志-小洪-8.13.txt" />
     <Content Include="修改日志\修改日志-杨锌彤-0819.txt" />
+    <Content Include="修改日志\修改日志-杨锌彤-0824.txt" />
     <Content Include="修改日志\修改日志-胡庭豪-0815.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -76,10 +76,10 @@ namespace Canvas.DrawTools
         /// <param name="pos"></param>
         public void SetPosition(UnitPoint pos)
         {
-            if (Control.ModifierKeys == Keys.Control)//如果按下ctrl，则以45度角找邻点
-                pos = HitUtil.OrthoPointD(OtherPoint(m_pointId), pos, 45);
-            if (m_angleLocked || Control.ModifierKeys == (Keys)(Keys.Control | Keys.Shift))//如果角度被锁定且按下crtl或shifr则设定为点到直线最近距离直线上的点？？
-                pos = HitUtil.NearestPointOnLine(m_owner.P1, m_owner.P2, pos, true);
+            //if (Control.ModifierKeys == Keys.Control)//如果按下ctrl，则以45度角找邻点
+            //    pos = HitUtil.OrthoPointD(OtherPoint(m_pointId), pos, 45);
+            //if (m_angleLocked || Control.ModifierKeys == (Keys)(Keys.Control | Keys.Shift))//如果角度被锁定且按下crtl或shifr则设定为点到直线最近距离直线上的点？？
+            //    pos = HitUtil.NearestPointOnLine(m_owner.P1, m_owner.P2, pos, true);
             SetPoint(m_pointId, pos, m_clone);//设置线上的点（p1,p2）的信息。
         }
 
@@ -239,7 +239,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 从模型中初始化矩形(点状),可能与从xml中恢复有关
+        /// 从模型中初始化矩形(点状)
         /// </summary>
         /// <param name="point"></param>
         /// <param name="layer"></param>
@@ -341,7 +341,11 @@ namespace Canvas.DrawTools
             }
            
         }
-
+        /// <summary>
+        /// 获取包裹图形的矩形区域，用于清除画图轨迹
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <returns></returns>
         public RectangleF GetBoundingRect(ICanvas canvas)
         {
             float r =Convert.ToSingle(Math.Sqrt((Math.Pow((m_p1.X - m_p2.X),2.0)+ Math.Pow((m_p1.Y - m_p2.Y), 2.0))/2));
@@ -442,20 +446,20 @@ namespace Canvas.DrawTools
         {
             OnMouseMove(canvas, point);
             Selected = false;
-            if (snappoint is PerpendicularSnapPoint && snappoint.Owner is Rectangle)
-            {
-                Rectangle src = snappoint.Owner as Rectangle;
-                m_p2 = HitUtil.NearestPointOnLine(src.P1, src.P2, m_p1, true);
-                return eDrawObjectMouseDown.Done;
-            }
-            //if (snappoint is PerpendicularSnapPoint && snappoint.Owner is Arc)
+            //if (snappoint is PerpendicularSnapPoint && snappoint.Owner is Rectangle)
             //{
-            //    Arc src = snappoint.Owner as Arc;
-            //    m_p2 = HitUtil.NearestPointOnCircle(src.Center, src.Radius, m_p1, 0);
-            //    return eDrawObjectMouseDown.DoneRepeat;
+            //    Rectangle src = snappoint.Owner as Rectangle;
+            //    m_p2 = HitUtil.NearestPointOnLine(src.P1, src.P2, m_p1, true);
+            //    return eDrawObjectMouseDown.Done;
             //}
-            if (Control.ModifierKeys == Keys.Control)
-                point = HitUtil.OrthoPointD(m_p1, point, 45);
+            ////if (snappoint is PerpendicularSnapPoint && snappoint.Owner is Arc)
+            ////{
+            ////    Arc src = snappoint.Owner as Arc;
+            ////    m_p2 = HitUtil.NearestPointOnCircle(src.Center, src.Radius, m_p1, 0);
+            ////    return eDrawObjectMouseDown.DoneRepeat;
+            ////}
+            //if (Control.ModifierKeys == Keys.Control)
+            //    point = HitUtil.OrthoPointD(m_p1, point, 45);
             m_p2 = point;
             return eDrawObjectMouseDown.Done;
         }

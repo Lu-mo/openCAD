@@ -235,7 +235,21 @@ namespace Canvas
 			mmitem.Tag = "arcCR";
 			m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.Arc(DrawTools.Arc.eArcType.typeCenterRadius));
 
-			ToolStrip strip = m_menuItems.GetStrip("draw");
+            #region 添加的贝塞尔曲线工具
+
+            mmitem = m_menuItems.GetItem("BezierCurve");
+            mmitem.Text = "BezierCurve";
+            mmitem.ToolTipText = "BezierCurve (B)";
+            //mmitem.Image = ;
+            mmitem.Click += new EventHandler(OnToolSelect);
+            mmitem.SingleKey = Keys.B;
+            mmitem.ShortcutKeyDisplayString = "B";
+            mmitem.Tag = "BezierCurve";
+            m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.BezierCurveEdit());
+
+            #endregion
+
+            ToolStrip strip = m_menuItems.GetStrip("draw");
 			strip.Items.Add(m_menuItems.GetItem("Lines").CreateButton());
             strip.Items.Add(m_menuItems.GetItem("Rectangle").CreateButton());//矩形工具
             strip.Items.Add(m_menuItems.GetItem("Circle2P").CreateButton());
@@ -244,8 +258,9 @@ namespace Canvas
 			strip.Items.Add(m_menuItems.GetItem("ArcCR").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("Arc3P132").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("Arc3P123").CreateButton());
+            strip.Items.Add(m_menuItems.GetItem("BezierCurve").CreateButton());//Bezier curve工具
 
-			ToolStripMenuItem menu = m_menuItems.GetMenuStrip("draw");
+            ToolStripMenuItem menu = m_menuItems.GetMenuStrip("draw");
 			menu.MergeAction = System.Windows.Forms.MergeAction.Insert;
 			menu.MergeIndex = 2;
 			menu.Text = "Draw &Tools";
@@ -258,7 +273,8 @@ namespace Canvas
 			menu.DropDownItems.Add(m_menuItems.GetItem("ArcCR").CreateMenuItem());
 			menu.DropDownItems.Add(m_menuItems.GetItem("Arc3P132").CreateMenuItem());
 			menu.DropDownItems.Add(m_menuItems.GetItem("Arc3P123").CreateMenuItem());
-		}
+            menu.DropDownItems.Add(m_menuItems.GetItem("BezierCurve").CreateMenuItem());//Bezier curve工具
+        }
 
         /// <summary>
         /// 初始化编辑工具
