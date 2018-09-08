@@ -32,3 +32,6 @@ public void DrawBezier(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2, Unit
     #endregion
 5.2 strip.Items.Add(m_menuItems.GetItem("BezierCurve").CreateButton());//Bezier curve工具
 5.3 menu.DropDownItems.Add(m_menuItems.GetItem("BezierCurve").CreateMenuItem());//Bezier curve工具
+6.model.cs添加
+m_toolTypes[DrawTools.BezierCurve.ObjectType] = typeof(DrawTools.BezierCurve);
+用于读取曲线

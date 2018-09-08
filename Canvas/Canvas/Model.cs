@@ -78,6 +78,7 @@ namespace Canvas
 			m_toolTypes[DrawTools.Arc.ObjectType] = typeof(DrawTools.Arc);
 			m_toolTypes[DrawTools.Arc3Point.ObjectType] = typeof(DrawTools.Arc3Point);
             m_toolTypes[DrawTools.Rectangle.ObjectType] = typeof(DrawTools.Rectangle);
+            m_toolTypes[DrawTools.BezierCurve.ObjectType] = typeof(DrawTools.BezierCurve);
             DefaultLayer();
 			m_centerPoint = new UnitPoint(0,0);
 		}
