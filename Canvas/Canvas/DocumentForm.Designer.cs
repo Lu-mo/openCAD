@@ -28,16 +28,18 @@ namespace Canvas
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.SuspendLayout();
-			// 
-			// DocumentForm
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(501, 360);
-			this.Name = "DocumentForm";
-			this.Text = "DocumentForm";
-			this.ResumeLayout(false);
+            this.SuspendLayout();
+            // 
+            // DocumentForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(501, 332);
+            this.ControlBox = false;
+            this.MinimizeBox = false;
+            this.Name = "DocumentForm";
+            this.Text = "DocumentForm";
+            this.ResumeLayout(false);
 
 		}
 

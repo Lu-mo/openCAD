@@ -870,4 +870,5 @@ namespace Canvas.DrawTools
 		protected eCurrentPoint m_curPoint = eCurrentPoint.done;
 		protected UnitPoint m_lastPoint = UnitPoint.Empty;
 	}
+
 }

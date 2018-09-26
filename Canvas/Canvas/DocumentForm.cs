@@ -61,12 +61,12 @@ namespace Canvas
 			m_canvas.KeyDown += new KeyEventHandler(OnCanvasKeyDown);
 			SetupMenuItems();
 			SetupDrawTools();
-			SetupLayerToolstrip();
+			//SetupLayerToolstrip();
 			SetupEditTools();
-			UpdateLayerUI();
+			//UpdateLayerUI();
 
 			MenuStrip menuitem = new MenuStrip();
-			menuitem.Items.Add(m_menuItems.GetMenuStrip("edit"));
+			//menuitem.Items.Add(m_menuItems.GetMenuStrip("edit"));
 			menuitem.Items.Add(m_menuItems.GetMenuStrip("draw"));
 			menuitem.Visible = false;
 			Controls.Add(menuitem);
@@ -225,7 +225,21 @@ namespace Canvas
 			mmitem.Tag = "arc3P123";
 			m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.Arc3Point(DrawTools.Arc3Point.eArcType.kArc3P123));
 
-			mmitem = m_menuItems.GetItem("ArcCR");
+            #region 添加的三點畫圓工具
+
+            mmitem = m_menuItems.GetItem("Circle3Point");
+            mmitem.Text = "Circle3Point";
+            mmitem.ToolTipText = "Circle3Point";
+            //mmitem.Image = ;
+            mmitem.Click += new EventHandler(OnToolSelect);
+            //mmitem.SingleKey = Keys.B;
+            //mmitem.ShortcutKeyDisplayString = "B";
+            mmitem.Tag = "Circle3Point";
+            m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.Circle3Point());
+
+            #endregion
+
+            mmitem = m_menuItems.GetItem("ArcCR");
 			mmitem.Text = "Arc CR";
 			mmitem.ToolTipText = "Arc Center-Radius";
 			mmitem.Image = DrawToolsImages16x16.Image(DrawToolsImages16x16.eIndexes.ArcCR);
@@ -258,22 +272,24 @@ namespace Canvas
 			strip.Items.Add(m_menuItems.GetItem("ArcCR").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("Arc3P132").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("Arc3P123").CreateButton());
+            strip.Items.Add(m_menuItems.GetItem("Circle3Point").CreateButton());//Circle3Point工具
             strip.Items.Add(m_menuItems.GetItem("BezierCurve").CreateButton());//Bezier curve工具
 
-            ToolStripMenuItem menu = m_menuItems.GetMenuStrip("draw");
-			menu.MergeAction = System.Windows.Forms.MergeAction.Insert;
-			menu.MergeIndex = 2;
-			menu.Text = "Draw &Tools";
-			menu.DropDownItems.Add(m_menuItems.GetItem("Lines").CreateMenuItem());
-			menu.DropDownItems.Add(m_menuItems.GetItem("Line").CreateMenuItem());
-            menu.DropDownItems.Add(m_menuItems.GetItem("Rectangle").CreateMenuItem());//矩形工具
-            menu.DropDownItems.Add(m_menuItems.GetItem("Circle2P").CreateMenuItem());
-			menu.DropDownItems.Add(m_menuItems.GetItem("CircleCR").CreateMenuItem());
-			menu.DropDownItems.Add(m_menuItems.GetItem("Arc2P").CreateMenuItem());
-			menu.DropDownItems.Add(m_menuItems.GetItem("ArcCR").CreateMenuItem());
-			menu.DropDownItems.Add(m_menuItems.GetItem("Arc3P132").CreateMenuItem());
-			menu.DropDownItems.Add(m_menuItems.GetItem("Arc3P123").CreateMenuItem());
-            menu.DropDownItems.Add(m_menuItems.GetItem("BezierCurve").CreateMenuItem());//Bezier curve工具
+   //         ToolStripMenuItem menu = m_menuItems.GetMenuStrip("draw");
+			//menu.MergeAction = System.Windows.Forms.MergeAction.Insert;
+			//menu.MergeIndex = 2;
+			//menu.Text = "Draw &Tools";
+			//menu.DropDownItems.Add(m_menuItems.GetItem("Lines").CreateMenuItem());
+			//menu.DropDownItems.Add(m_menuItems.GetItem("Line").CreateMenuItem());
+   //         menu.DropDownItems.Add(m_menuItems.GetItem("Rectangle").CreateMenuItem());//矩形工具
+   //         menu.DropDownItems.Add(m_menuItems.GetItem("Circle2P").CreateMenuItem());
+			//menu.DropDownItems.Add(m_menuItems.GetItem("CircleCR").CreateMenuItem());
+			//menu.DropDownItems.Add(m_menuItems.GetItem("Arc2P").CreateMenuItem());
+			//menu.DropDownItems.Add(m_menuItems.GetItem("ArcCR").CreateMenuItem());
+			//menu.DropDownItems.Add(m_menuItems.GetItem("Arc3P132").CreateMenuItem());
+			//menu.DropDownItems.Add(m_menuItems.GetItem("Arc3P123").CreateMenuItem());
+   //         menu.DropDownItems.Add(m_menuItems.GetItem("Circle3Point").CreateMenuItem());//Circle3Point工具
+   //         menu.DropDownItems.Add(m_menuItems.GetItem("BezierCurve").CreateMenuItem());//Bezier curve工具
         }
 
         /// <summary>

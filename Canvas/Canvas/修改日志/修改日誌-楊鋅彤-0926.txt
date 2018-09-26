@@ -1,0 +1,22 @@
+﻿1	添加Circle3Point.cs(未完成)
+2.1
+#region 添加的三點畫圓工具
+
+            mmitem = m_menuItems.GetItem("Circle3Point");
+            mmitem.Text = "Circle3Point";
+            mmitem.ToolTipText = "Circle3Point";
+            //mmitem.Image = ;
+            mmitem.Click += new EventHandler(OnToolSelect);
+            //mmitem.SingleKey = Keys.B;
+            //mmitem.ShortcutKeyDisplayString = "B";
+            mmitem.Tag = "Circle3Point";
+            m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.Circle3Point());
+
+            #endregion
+2.2
+            strip.Items.Add(m_menuItems.GetItem("Circle3Point").CreateButton());//Circle3Point工具
+2.3
+			menu.DropDownItems.Add(m_menuItems.GetItem("Circle3Point").CreateMenuItem());//Circle3Point工具
+3讀取記錄
+			m_toolTypes[DrawTools.Circle3Point.ObjectType] = typeof(DrawTools.Circle3Point);
+4修改了顯示的控件

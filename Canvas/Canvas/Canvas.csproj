@@ -64,6 +64,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -90,6 +91,7 @@
     <Compile Include="DrawTools\ArcCircle3PointTool.cs" />
     <Compile Include="DrawTools\ArcCircleTool.cs" />
     <Compile Include="DrawTools\BezierCurveTool.cs" />
+    <Compile Include="DrawTools\Circle3Point.cs" />
     <Compile Include="DrawTools\DrawToolsUtils.cs" />
     <Compile Include="DrawTools\LineTool.cs" />
     <Compile Include="DrawTools\RectangleTool.cs" />
@@ -221,6 +223,7 @@
     <Content Include="修改日志\修改日志-杨锌彤-0819.txt" />
     <Content Include="修改日志\修改日志-杨锌彤-0824~0908.txt" />
     <Content Include="修改日志\修改日志-胡庭豪-0815.txt" />
+    <Content Include="修改日志\修改日誌-楊鋅彤-0926.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

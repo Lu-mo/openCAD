@@ -42,66 +42,66 @@ namespace Canvas
         /// </summary>
         void SetupToolbars()
         {
-            #region "文件"下拉菜单项通过MenuItemManager初始化
-            MenuItem mmitem = m_menuItems.GetItem("New");
-            //mmitem.Text = "&New";
-            mmitem.Text = "&新建";
-            mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.NewDocument);
-            mmitem.Click += new EventHandler(OnFileNew);
-            mmitem.ToolTipText = "New document";
+            //#region "文件"下拉菜单项通过MenuItemManager初始化
+            //MenuItem mmitem = m_menuItems.GetItem("New");
+            ////mmitem.Text = "&New";
+            //mmitem.Text = "&新建";
+            //mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.NewDocument);
+            //mmitem.Click += new EventHandler(OnFileNew);
+            //mmitem.ToolTipText = "New document";
 
-            mmitem = m_menuItems.GetItem("Open");
-            //mmitem.Text = "&Open";
-            mmitem.Text = "&打开";
-            mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.OpenDocument);
-            mmitem.Click += new EventHandler(OnFileOpen);
-            mmitem.ToolTipText = "Open document";
+            //mmitem = m_menuItems.GetItem("Open");
+            ////mmitem.Text = "&Open";
+            //mmitem.Text = "&打开";
+            //mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.OpenDocument);
+            //mmitem.Click += new EventHandler(OnFileOpen);
+            //mmitem.ToolTipText = "Open document";
 
-            mmitem = m_menuItems.GetItem("Save");
-            //mmitem.Text = "&Save";
-            mmitem.Text = "&保存";
-            mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.SaveDocument);
-            mmitem.Click += new EventHandler(OnFileSave);
-            mmitem.ToolTipText = "Save document";
+            //mmitem = m_menuItems.GetItem("Save");
+            ////mmitem.Text = "&Save";
+            //mmitem.Text = "&保存";
+            //mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.SaveDocument);
+            //mmitem.Click += new EventHandler(OnFileSave);
+            //mmitem.ToolTipText = "Save document";
 
-            mmitem = m_menuItems.GetItem("SaveAs");
-            //mmitem.Text = "Save &As";
-            mmitem.Text = "另存为";
-            mmitem.Click += new EventHandler(OnFileSaveAs);
+            //mmitem = m_menuItems.GetItem("SaveAs");
+            ////mmitem.Text = "Save &As";
+            //mmitem.Text = "另存为";
+            //mmitem.Click += new EventHandler(OnFileSaveAs);
 
-            mmitem = m_menuItems.GetItem("Exit");
-            //mmitem.Text = "E&xit";
-            mmitem.Text = "退出";
-            mmitem.Click += new EventHandler(OnFileExit);
-            #endregion
+            //mmitem = m_menuItems.GetItem("Exit");
+            ////mmitem.Text = "E&xit";
+            //mmitem.Text = "退出";
+            //mmitem.Click += new EventHandler(OnFileExit);
+            //#endregion
 
-            #region "文件"图片列工具栏构造
-            ToolStrip strip = m_menuItems.GetStrip("file");
-            strip.Items.Add(m_menuItems.GetItem("New").CreateButton());
-            strip.Items.Add(m_menuItems.GetItem("Open").CreateButton());
-            strip.Items.Add(m_menuItems.GetItem("Save").CreateButton());
-            #endregion
+            //#region "文件"图片列工具栏构造
+            //ToolStrip strip = m_menuItems.GetStrip("file");
+            //strip.Items.Add(m_menuItems.GetItem("New").CreateButton());
+            //strip.Items.Add(m_menuItems.GetItem("Open").CreateButton());
+            //strip.Items.Add(m_menuItems.GetItem("Save").CreateButton());
+            //#endregion
 
-            #region "文件"下拉菜单栏添加控件
-            ToolStripMenuItem menuitem = m_menuItems.GetMenuStrip("file");
-            menuitem.Text = "&File";
-            menuitem.Text = "文件";
-            menuitem.DropDownItems.Add(m_menuItems.GetItem("New").CreateMenuItem());
-            menuitem.DropDownItems.Add(m_menuItems.GetItem("Open").CreateMenuItem());
-            menuitem.DropDownItems.Add(m_menuItems.GetItem("Save").CreateMenuItem());
-            menuitem.DropDownItems.Add(m_menuItems.GetItem("SaveAs").CreateMenuItem());
-            menuitem.DropDownItems.Add(new ToolStripSeparator());
-            menuitem.DropDownItems.Add(m_menuItems.GetItem("Exit").CreateMenuItem());
-            m_mainMenu.Items.Insert(0, menuitem);
-            #endregion
+            //#region "文件"下拉菜单栏添加控件
+            //ToolStripMenuItem menuitem = m_menuItems.GetMenuStrip("file");
+            //menuitem.Text = "&File";
+            //menuitem.Text = "文件";
+            //menuitem.DropDownItems.Add(m_menuItems.GetItem("New").CreateMenuItem());
+            //menuitem.DropDownItems.Add(m_menuItems.GetItem("Open").CreateMenuItem());
+            //menuitem.DropDownItems.Add(m_menuItems.GetItem("Save").CreateMenuItem());
+            //menuitem.DropDownItems.Add(m_menuItems.GetItem("SaveAs").CreateMenuItem());
+            //menuitem.DropDownItems.Add(new ToolStripSeparator());
+            //menuitem.DropDownItems.Add(m_menuItems.GetItem("Exit").CreateMenuItem());
+            //m_mainMenu.Items.Insert(0, menuitem);
+            //#endregion
 
             #region 上左下菜单栏/状态栏设置控件
             ToolStripPanel panel = m_menuItems.GetStripPanel(DockStyle.Top);
 
-            panel.Join(m_menuItems.GetStrip("layer"));
+            //panel.Join(m_menuItems.GetStrip("layer"));
             panel.Join(m_menuItems.GetStrip("draw"));
             panel.Join(m_menuItems.GetStrip("edit"));
-            panel.Join(m_menuItems.GetStrip("file"));
+            //panel.Join(m_menuItems.GetStrip("file"));
             panel.Join(m_mainMenu); //主菜单加入面板
 
             panel = m_menuItems.GetStripPanel(DockStyle.Left);
