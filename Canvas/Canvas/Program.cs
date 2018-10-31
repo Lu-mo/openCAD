@@ -14,14 +14,19 @@ namespace Canvas
 		[STAThread]
 		static void Main()
 		{
-			//CommonTools.Tracing.EnableTrace();
-			CommonTools.Tracing.AddId(TracePaint);
+            //CommonTools.Tracing.EnableTrace();
 
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainWin());
+            //xml文本比较
+            //if (CommonTools.XmlComparator.BothXmlLoader("E:\\3.cadxml", "E:\\222.cadxml") == false)
+            //    Console.WriteLine("buyizhi");
 
-			CommonTools.Tracing.Terminate();
-		}
+            CommonTools.Tracing.AddId(TracePaint);
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainWin());
+
+            CommonTools.Tracing.Terminate();
+        }
 	}
 }

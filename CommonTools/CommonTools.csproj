@@ -138,6 +138,7 @@
     </Compile>
     <Compile Include="Tracing.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="XmlComparator.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ColorPickerCtrl\ColorPickerCtrl.resx">
