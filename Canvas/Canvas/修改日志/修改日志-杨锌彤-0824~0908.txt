@@ -16,7 +16,7 @@ public void DrawBezier(ICanvas canvas, Pen pen, UnitPoint p1, UnitPoint p2, Unit
             canvas.Graphics.DrawBezier(pen, tmpp1, tmpp2, tmpp3, tmpp4);
 }
 
-5.在documentForm中添加以显示矩形工具按钮及菜单
+5.在documentForm中添加以显示贝塞尔工具按钮及菜单
 5.1 #region 添加的贝塞尔曲线工具
 
             mmitem = m_menuItems.GetItem("BezierCurve");

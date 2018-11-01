@@ -16,7 +16,7 @@ namespace CommonTools
         //    if (BothXmlLoader(StandardXmlFilePath, AnswerXmlFilePath) == false)
         //        return;
         //}
-        public static bool BothXmlLoader(string StandardXmlFilePath, string AnswerXmlFilePath)
+        public static bool BothXmlLoader(string StandardXmlFilePath, string AnswerXmlFilePath, out string Info)
         {
             try
             {
@@ -29,15 +29,21 @@ namespace CommonTools
             }
             catch (Exception)
             {
+                Info = "Loading Error";
                 return false;
             }
-            return XmlCompare();
+            //Info = "Loading successful";
+            bool flag= XmlCompare(out Info);
+            return flag;
             //return true;
         }
-        public static bool XmlCompare()
+        public static bool XmlCompare(out string Info)
         {
             if (standard == null || answer == null)
+            {
+                Info = "Xml Empty";
                 return false;
+            }
             //读取根节点
             XmlNode SrootNode = standard.SelectSingleNode("CanvasDataModel").SelectSingleNode("layer").SelectSingleNode("items");
             XmlNode ArootNode = answer.SelectSingleNode("CanvasDataModel").SelectSingleNode("layer").SelectSingleNode("items");
@@ -54,7 +60,7 @@ namespace CommonTools
             {
                 foreach (XmlNode Anode in AfirstLevelNodeList)
                 {
-                    if(NodeCompare(Snode,Anode))
+                    if (NodeCompare(Snode, Anode))
                     {
                         flag = true;
                     }
@@ -67,11 +73,16 @@ namespace CommonTools
 
             }
             if (sameNum == SfirstLevelNodeList.Count)
+            {
+                Info ="correct graph number:"+ sameNum.ToString() + "/" + "total correct graph number:" + SfirstLevelNodeList.Count.ToString()+"/" + "Your answer graph number:" + AfirstLevelNodeList.Count.ToString();
                 return true;
+            }
             else
+            {
+                Info = "correct graph number:" + sameNum.ToString() + "/" + "total correct graph number:" + SfirstLevelNodeList.Count.ToString() + "/" + "Your answer graph number:" + AfirstLevelNodeList.Count.ToString();
                 return false;
+            }
         }
-
         public static bool NodeCompare(XmlNode s,XmlNode a)
         {
             if (!s.Name.Equals(a.Name)) return false;

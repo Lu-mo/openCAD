@@ -46,7 +46,7 @@ namespace Canvas
 			PointF centerpoint = new PointF(r.Width / 2, r.Height / 2);
 			canvas.Graphics.TranslateTransform(centerpoint.X, centerpoint.Y);//中心点标记
 			canvas.Graphics.RotateTransform(-15);//设置网格线角度？？
-			canvas.Graphics.DrawString("Jesper Kristiansen (2007)", m_font, m_brush, 0, 0, f);
+			//canvas.Graphics.DrawString("Jesper Kristiansen (2007)", m_font, m_brush, 0, 0, f);
 			canvas.Graphics.ResetTransform();//设置网格线恢复变化？？
         }
         public void Draw5x5(ICanvas canvas, RectangleF unitrect)

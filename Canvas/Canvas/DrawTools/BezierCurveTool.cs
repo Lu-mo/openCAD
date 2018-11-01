@@ -176,7 +176,7 @@ namespace Canvas.DrawTools
 
     class BezierCurve : DrawObjectBase, IDrawObject, ISerialize
     {
-        protected UnitPoint m_p1=UnitPoint.Empty, m_p2 = UnitPoint.Empty, m_p3 = UnitPoint.Empty, m_p4 = UnitPoint.Empty, m_curPoint = UnitPoint.Empty;
+        protected UnitPoint m_p1=UnitPoint.Empty, m_p2 = UnitPoint.Empty, m_p3 = UnitPoint.Empty, m_p4 = UnitPoint.Empty, m_curPoint = UnitPoint.Empty,t = UnitPoint.Empty,m_point=UnitPoint.Empty;
         public BezierCurve(UnitPoint p1, UnitPoint p2, UnitPoint p3, UnitPoint p4, float width, Color color)
         {
             P1 = p1;
@@ -312,12 +312,14 @@ namespace Canvas.DrawTools
         /// <returns></returns>
         public RectangleF GetBoundingRect(ICanvas canvas)
         {
-            float r = Convert.ToSingle(Math.Sqrt((Math.Pow((m_p1.X - m_p4.X), 2.0) + Math.Pow((m_p1.Y - m_p4.Y), 2.0)) / 2));
+            t.X = m_point.X>t.X?m_point.X:t.X;
+            t.Y = m_point.Y > t.Y ? m_point.Y : t.Y;
+            float r = Convert.ToSingle(Math.Sqrt((Math.Pow((m_curPoint.X - t.X), 2.0) + Math.Pow((m_curPoint.Y - t.Y), 2.0)) / 2.0));
             //Console.WriteLine(r+" ");
-            RectangleF rect = HitUtil.CircleBoundingRect(new UnitPoint((m_p1.X + m_p4.X) / 2.0, (m_p1.Y + m_p4.Y) / 2.0), r);
+            RectangleF rect = HitUtil.CircleBoundingRect(new UnitPoint((m_curPoint.X + Math.Abs(t.X)) / 2.0, (m_curPoint.Y + Math.Abs(t.Y)) / 2.0), 2*r);
             // if drawing either angle then include the mouse point in the ractangle - this is to redraw (erase) the line drawn
             // from center point to mouse point
-
+            Console.WriteLine(r+" "+t.X+" "+t.Y);
             return rect;
 
             //float thWidth = ThresholdWidth(canvas, Width);
@@ -514,6 +516,7 @@ namespace Canvas.DrawTools
         /// <param name="point"></param>
         public virtual void OnMouseMove(ICanvas canvas, UnitPoint point)
         {
+            m_point = point;
             if (m_curPoint.Equals(m_p1)) { m_p2 = point; }
             if (m_curPoint.Equals(m_p2)) { m_p3 = point; }
             if (m_curPoint.Equals(m_p3)) { m_p4 = point; }
