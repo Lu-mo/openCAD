@@ -319,7 +319,7 @@ namespace Canvas.DrawTools
             RectangleF rect = HitUtil.CircleBoundingRect(new UnitPoint((m_curPoint.X + Math.Abs(t.X)) / 2.0, (m_curPoint.Y + Math.Abs(t.Y)) / 2.0), 2*r);
             // if drawing either angle then include the mouse point in the ractangle - this is to redraw (erase) the line drawn
             // from center point to mouse point
-            Console.WriteLine(r+" "+t.X+" "+t.Y);
+            //Console.WriteLine(r+" "+t.X+" "+t.Y);
             return rect;
 
             //float thWidth = ThresholdWidth(canvas, Width);

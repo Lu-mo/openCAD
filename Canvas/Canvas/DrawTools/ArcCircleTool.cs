@@ -517,28 +517,28 @@ namespace Canvas.DrawTools
 		}
 		public virtual INodePoint NodePoint(ICanvas canvas, UnitPoint point)
 		{
-			float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
-			if (HitUtil.PointInPoint(m_center, point, thWidth))
-				return new NodePointArcCenter(this);
-			if (HitUtil.PointInPoint(StartAnglePoint, point, thWidth))
-			{
-				m_curPoint = eCurrentPoint.startAngle;
-				m_lastPoint = m_center;
-				return new NodePointArcAngle(this);
-			}
-			if (HitUtil.PointInPoint(EndAnglePoint, point, thWidth))
-			{
-				m_curPoint = eCurrentPoint.endAngle;
-				m_lastPoint = m_center;
-				return new NodePointArcAngle(this);
-			}
-			if (HitUtil.PointInPoint(RadiusPoint, point, thWidth))
-			{
-				m_curPoint = eCurrentPoint.radius;
-				m_lastPoint = m_center;
-				return new NodePointArcRadius(this);
-			}
-			return null;
+            float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
+            if (HitUtil.PointInPoint(m_center, point, thWidth))
+                return new NodePointArcCenter(this);
+            if (HitUtil.PointInPoint(StartAnglePoint, point, thWidth))
+            {
+                m_curPoint = eCurrentPoint.startAngle;
+                m_lastPoint = m_center;
+                return new NodePointArcAngle(this);
+            }
+            if (HitUtil.PointInPoint(EndAnglePoint, point, thWidth))
+            {
+                m_curPoint = eCurrentPoint.endAngle;
+                m_lastPoint = m_center;
+                return new NodePointArcAngle(this);
+            }
+            if (HitUtil.PointInPoint(RadiusPoint, point, thWidth))
+            {
+                m_curPoint = eCurrentPoint.radius;
+                m_lastPoint = m_center;
+                return new NodePointArcRadius(this);
+            }
+            return null;
 		}
 		public virtual ISnapPoint SnapPoint(ICanvas canvas, UnitPoint point, List<IDrawObject> otherobj, Type[] runningsnaptypes, Type usersnaptype)
 		{
@@ -802,23 +802,23 @@ namespace Canvas.DrawTools
 		}
 		public override INodePoint NodePoint(ICanvas canvas, UnitPoint point)
 		{
-			float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
-			if (HitUtil.PointInPoint(Center, point, thWidth))
-				return new NodePointArcCenter(this);
-			bool radiushit = HitUtil.PointInPoint(AnglePoint(0), point, thWidth);
-			if (radiushit == false)
-				radiushit = HitUtil.PointInPoint(AnglePoint(90), point, thWidth);
-			if (radiushit == false)
-				radiushit = HitUtil.PointInPoint(AnglePoint(180), point, thWidth);
-			if (radiushit == false)
-				radiushit = HitUtil.PointInPoint(AnglePoint(270), point, thWidth);
-			if (radiushit)
-			{
-				m_curPoint = eCurrentPoint.radius;
-				m_lastPoint = Center;
-				return new NodePointArcRadius(this);
-			}
-			return null;
+            float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
+            if (HitUtil.PointInPoint(Center, point, thWidth))
+                return new NodePointArcCenter(this);
+            bool radiushit = HitUtil.PointInPoint(AnglePoint(0), point, thWidth);
+            if (radiushit == false)
+                radiushit = HitUtil.PointInPoint(AnglePoint(90), point, thWidth);
+            if (radiushit == false)
+                radiushit = HitUtil.PointInPoint(AnglePoint(180), point, thWidth);
+            if (radiushit == false)
+                radiushit = HitUtil.PointInPoint(AnglePoint(270), point, thWidth);
+            if (radiushit)
+            {
+                m_curPoint = eCurrentPoint.radius;
+                m_lastPoint = Center;
+                return new NodePointArcRadius(this);
+            }
+            return null;
 		}
 
         /// <summary>
