@@ -745,78 +745,89 @@ namespace Canvas.DrawTools
 		}
 		public virtual ISnapPoint SnapPoint(ICanvas canvas, UnitPoint point, List<IDrawObject> otherobj, Type[] runningsnaptypes, Type usersnaptype)
 		{
-			float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
-			if (runningsnaptypes != null)
-			{
-				foreach (Type snaptype in runningsnaptypes)
-				{
-					/*
-					if (snaptype == typeof(QuadrantSnapPoint))
-					{
-						UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 90);
-						if (p != UnitPoint.Empty && HitUtil.PointInPoint(p, point, thWidth))
-							return new QuadrantSnapPoint(canvas, this, p);
-					}
-					if (snaptype == typeof(CenterSnapPoint))
-					{
-						if (HitUtil.PointInPoint(m_center, point, thWidth))
-							return new CenterSnapPoint(canvas, this, m_center);
-					}
-					 * */
-					if (snaptype == typeof(VertextSnapPoint))
-					{
-						if (HitUtil.PointInPoint(P1, point, thWidth))
-							return new VertextSnapPoint(canvas, this, P1);
-						if (HitUtil.PointInPoint(P3, point, thWidth))
-							return new VertextSnapPoint(canvas, this, P3);
-					}
-				}
-				return null;
-			}
-			if (usersnaptype == typeof(NearestSnapPoint))
-			{
-				UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 0);
-				if (p != UnitPoint.Empty)
-					return new NearestSnapPoint(canvas, this, p);
-			}
-			if (usersnaptype == typeof(PerpendicularSnapPoint))
-			{
-				UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 0);
-				if (p != UnitPoint.Empty)
-					return new PerpendicularSnapPoint(canvas, this, p);
-			}
-			if (usersnaptype == typeof(QuadrantSnapPoint))
-			{
-				UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 90);
-				if (p != UnitPoint.Empty)
-					return new QuadrantSnapPoint(canvas, this, p);
-			}
-			if (usersnaptype == typeof(TangentSnapPoint))
-			{
-				IDrawObject drawingObject = canvas.CurrentObject;
-				UnitPoint p = UnitPoint.Empty;
-				if (drawingObject is LineEdit)
-				{
-					UnitPoint mousepoint = point;
-					point = ((LineEdit)drawingObject).P1;
-					UnitPoint p1 = HitUtil.TangentPointOnCircle(m_center, m_radius, point, false);
-					UnitPoint p2 = HitUtil.TangentPointOnCircle(m_center, m_radius, point, true);
-					double d1 = HitUtil.Distance(mousepoint, p1);
-					double d2 = HitUtil.Distance(mousepoint, p2);
-					if (d1 <= d2)
-						return new TangentSnapPoint(canvas, this, p1);
-					else
-						return new TangentSnapPoint(canvas, this, p2);
-				}
-				//if (p != PointF.Empty)
-				return new TangentSnapPoint(canvas, this, p);
-			}
-			if (usersnaptype == typeof(CenterSnapPoint))
-			{
-				return new CenterSnapPoint(canvas, this, m_center);
-			}
-			return null;
-		}
+            float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
+            if (runningsnaptypes != null)
+            {
+                foreach (Type snaptype in runningsnaptypes)
+                {
+
+                    if (snaptype == typeof(QuadrantSnapPoint))
+                    {
+                        UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 90);
+                        if (p != UnitPoint.Empty && HitUtil.PointInPoint(p, point, thWidth))
+                            return new QuadrantSnapPoint(canvas, this, p);
+                    }
+                   
+                    //if (snaptype == typeof(DivisionSnapPoint))
+                    //{
+                    //    double angle = 360 / 8;
+                    //    UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, angle);
+                    //    if (p != UnitPoint.Empty && HitUtil.PointInPoint(p, point, thWidth))
+                    //        return new DivisionSnapPoint(canvas, this, p);
+                    //}
+
+                    if (snaptype == typeof(CenterSnapPoint))
+                    {
+                        if (HitUtil.PointInPoint(m_center, point, thWidth))
+                            return new CenterSnapPoint(canvas, this, m_center);
+                    }
+
+                    if (snaptype == typeof(VertextSnapPoint))
+                    {
+                        if (HitUtil.PointInPoint(P1, point, thWidth))
+                            return new VertextSnapPoint(canvas, this, P1);
+                        if (HitUtil.PointInPoint(P3, point, thWidth))
+                            return new VertextSnapPoint(canvas, this, P3);
+                    }
+                }
+                return null;
+            }
+
+            if (usersnaptype == typeof(NearestSnapPoint))
+            {
+                UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 0);
+                if (p != UnitPoint.Empty)
+                    return new NearestSnapPoint(canvas, this, p);
+            }
+            if (usersnaptype == typeof(PerpendicularSnapPoint))
+            {
+                UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 0);
+                if (p != UnitPoint.Empty)
+                    return new PerpendicularSnapPoint(canvas, this, p);
+            }
+            if (usersnaptype == typeof(QuadrantSnapPoint))
+            {
+                UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 90);
+                if (p != UnitPoint.Empty)
+                    return new QuadrantSnapPoint(canvas, this, p);
+            }
+            if (usersnaptype == typeof(TangentSnapPoint))
+            {
+                IDrawObject drawingObject = canvas.CurrentObject;
+                UnitPoint p = UnitPoint.Empty;
+                if (drawingObject is LineEdit)
+                {
+                    UnitPoint mousepoint = point;
+                    point = ((LineEdit)drawingObject).P1;
+                    UnitPoint p1 = HitUtil.TangentPointOnCircle(m_center, m_radius, point, false);
+                    UnitPoint p2 = HitUtil.TangentPointOnCircle(m_center, m_radius, point, true);
+                    double d1 = HitUtil.Distance(mousepoint, p1);
+                    double d2 = HitUtil.Distance(mousepoint, p2);
+                    if (d1 <= d2)
+                        return new TangentSnapPoint(canvas, this, p1);
+                    else
+                        return new TangentSnapPoint(canvas, this, p2);
+                }
+                //if (p != PointF.Empty)
+                return new TangentSnapPoint(canvas, this, p);
+            }
+            if (usersnaptype == typeof(CenterSnapPoint))
+            {
+                return new CenterSnapPoint(canvas, this, m_center);
+            }
+               
+            return null;
+        }
 		public virtual void Move(UnitPoint offset)
 		{
 			P1 += offset;

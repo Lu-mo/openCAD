@@ -1182,6 +1182,10 @@ namespace Canvas
 				obj.Draw(canvas, r);
 		}
 	}
+
+    /// <summary>
+    /// 图形控制点移动帮助类
+    /// </summary>
 	public class NodeMoveHelper
 	{
 		List<INodePoint> m_nodes = new List<INodePoint>();
@@ -1205,12 +1209,13 @@ namespace Canvas
 			m_canvas = canvas;
 		}
         /// <summary>
-        /// 处理为点做的鼠标移动？
+        /// 处理为图形控制点做的鼠标移动
         /// </summary>
         /// <param name="mouseunitpoint"></param>
         /// <returns></returns>
 		public RectangleF HandleMouseMoveForNode(UnitPoint mouseunitpoint)
 		{
+            //return RectangleF.Empty;
 			RectangleF r = RectangleF.Empty;
 			if (m_nodes.Count == 0)
 				return r;

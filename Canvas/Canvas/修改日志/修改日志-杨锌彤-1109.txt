@@ -1,0 +1,8 @@
+﻿1.在RectangleTool.cs中添加P3,P4
+public enum ePoint
+        {
+            P1,
+            P2,
+            P3,
+            P4,
+        }

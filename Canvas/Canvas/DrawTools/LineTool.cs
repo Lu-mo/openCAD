@@ -227,7 +227,7 @@ namespace Canvas.DrawTools
 			return l;
 		}
         /// <summary>
-        /// 网格放大
+        /// 获取包裹图形的矩形
         /// </summary>
         /// <param name="canvas"></param>
         /// <returns></returns>
@@ -519,9 +519,9 @@ namespace Canvas.DrawTools
 		public override void InitializeFromModel(UnitPoint point, DrawingLayer layer, ISnapPoint snap)
 		{
 			base.InitializeFromModel(point, layer, snap);
-			m_perSnap = snap as PerpendicularSnapPoint;
-			m_tanSnap = snap as TangentSnapPoint;
-		}
+            m_perSnap = snap as PerpendicularSnapPoint;
+            m_tanSnap = snap as TangentSnapPoint;
+        }
         /// <summary>
         /// 鼠标移动
         /// </summary>
@@ -543,24 +543,24 @@ namespace Canvas.DrawTools
 		}
 		public override eDrawObjectMouseDown OnMouseDown(ICanvas canvas, UnitPoint point, ISnapPoint snappoint)
 		{
-			if (m_tanSnap != null && Control.MouseButtons == MouseButtons.Right)
-			{
-				ReverseTangent(canvas);
-				return eDrawObjectMouseDown.Continue;
-			}
+            if (m_tanSnap != null && Control.MouseButtons == MouseButtons.Right)
+            {
+                ReverseTangent(canvas);
+                return eDrawObjectMouseDown.Continue;
+            }
 
-			if (m_perSnap != null || m_tanSnap != null)
-			{
-				if (snappoint != null)
-					point = snappoint.SnapPoint;
-				OnMouseMove(canvas, point);
-				if (m_singleLineSegment)
-					return eDrawObjectMouseDown.Done;
-				return eDrawObjectMouseDown.DoneRepeat;
-			}
-			eDrawObjectMouseDown result = base.OnMouseDown(canvas, point, snappoint);
-			if (m_singleLineSegment)
-				return eDrawObjectMouseDown.Done;
+            if (m_perSnap != null || m_tanSnap != null)
+            {
+                if (snappoint != null)
+                    point = snappoint.SnapPoint;
+                OnMouseMove(canvas, point);
+                if (m_singleLineSegment)
+                    return eDrawObjectMouseDown.Done;
+                return eDrawObjectMouseDown.DoneRepeat;
+            }
+            eDrawObjectMouseDown result = base.OnMouseDown(canvas, point, snappoint);
+            if (m_singleLineSegment)
+                return eDrawObjectMouseDown.Done;
 			return eDrawObjectMouseDown.DoneRepeat;
 		}
 		public override void OnKeyDown(ICanvas canvas, KeyEventArgs e)
@@ -581,9 +581,9 @@ namespace Canvas.DrawTools
 			if (m_perSnap.Owner is Line)
 			{
 				Line src = m_perSnap.Owner as Line;
-				m_p1 = HitUtil.NearestPointOnLine(src.P1, src.P2, point, true);
-				m_p2 = point;
-			}
+                m_p1 = HitUtil.NearestPointOnLine(src.P1, src.P2, point, true);
+                m_p2 = point;
+            }
 			if (m_perSnap.Owner is IArc)
 			{
 				IArc src = m_perSnap.Owner as IArc;

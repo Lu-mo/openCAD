@@ -9,6 +9,7 @@ using System.Xml;
 
 namespace Canvas.DrawTools
 {
+
     class Circle3Point : DrawObjectBase, IArc, IDrawObject, ISerialize
     {
 

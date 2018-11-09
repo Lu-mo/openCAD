@@ -14,6 +14,8 @@ namespace Canvas.DrawTools
         {
             P1,
             P2,
+            P3,
+            P4,
         }
         static bool m_angleLocked = false;
         Rectangle m_owner;
@@ -181,6 +183,18 @@ namespace Canvas.DrawTools
             get { return m_p2; }
             set { m_p2 = value; }
         }
+        //[XmlSerializable]
+        //public UnitPoint P3
+        //{
+        //    get { return m_p3; }
+        //    set { m_p3 = value; }
+        //}
+        //[XmlSerializable]
+        //public UnitPoint P4
+        //{
+        //    get { return m_p4; }
+        //    set { m_p4 = value; }
+        //}
         public static string ObjectType//获取类型
         {
             get { return "Rectangle"; }
@@ -336,7 +350,11 @@ namespace Canvas.DrawTools
                 if (m_p1.IsEmpty == false)//如果端点p1不存在
                     DrawUtils.DrawNode(canvas, m_p1);//画点
                 if (m_p2.IsEmpty == false)//如果端点p2不存在
-                    DrawUtils.DrawNode(canvas, m_p2);//画点
+                    DrawUtils.DrawNode(canvas, m_p2);//画点                
+                //if (m_p3.IsEmpty == false)//如果端点p1不存在
+                //    DrawUtils.DrawNode(canvas, new UnitPoint(m_p1.X, m_p2.Y));//画点
+                //if (m_p4.IsEmpty == false)//如果端点p2不存在
+                //    DrawUtils.DrawNode(canvas, new UnitPoint(m_p2.X, m_p1.Y));//画点
                 //MessageBox.Show("");
             }
            
@@ -388,10 +406,15 @@ namespace Canvas.DrawTools
             m_p1.Y += offset.Y;
             m_p2.X += offset.X;
             m_p2.Y += offset.Y;
+
+            m_p3.X += offset.X;
+            m_p3.Y += offset.Y;
+            m_p4.X += offset.X;
+            m_p4.Y += offset.Y;
         }
 
         /// <summary>
-        /// 判断线的端点是否在圆内，是则返回新构造的NodePointLine
+        /// 控制点
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
@@ -403,6 +426,10 @@ namespace Canvas.DrawTools
                 return new RectangleTool(this, RectangleTool.ePoint.P1);
             if (HitUtil.CircleHitPoint(m_p2, thWidth, point))
                 return new RectangleTool(this, RectangleTool.ePoint.P2);
+            if (HitUtil.CircleHitPoint(m_p3, thWidth, point))
+                return new RectangleTool(this, RectangleTool.ePoint.P3);
+            if (HitUtil.CircleHitPoint(m_p4, thWidth, point))
+                return new RectangleTool(this, RectangleTool.ePoint.P4);
             return null;
         }
         /// <summary>
@@ -461,6 +488,8 @@ namespace Canvas.DrawTools
             //if (Control.ModifierKeys == Keys.Control)
             //    point = HitUtil.OrthoPointD(m_p1, point, 45);
             m_p2 = point;
+            //m_p3 = new UnitPoint(m_p1.X, m_p2.Y);
+            //m_p4 = new UnitPoint(m_p2.X, m_p1.Y);
             return eDrawObjectMouseDown.Done;
         }
 

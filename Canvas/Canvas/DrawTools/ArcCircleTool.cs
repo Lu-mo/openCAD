@@ -547,20 +547,27 @@ namespace Canvas.DrawTools
 			{
 				foreach (Type snaptype in runningsnaptypes)
 				{
-					if (snaptype == typeof(QuadrantSnapPoint))
-					{
-						UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 90);
-						if (p != UnitPoint.Empty && HitUtil.PointInPoint(p, point, thWidth))
-							return new QuadrantSnapPoint(canvas, this, p);
-					}
-					if (snaptype == typeof(DivisionSnapPoint))
-					{
-						double angle = 360 / Divisions;
-						UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, angle);
-						if (p != UnitPoint.Empty && HitUtil.PointInPoint(p, point, thWidth))
-							return new DivisionSnapPoint(canvas, this, p);
-					}
-					if (snaptype == typeof(CenterSnapPoint))
+                    //if (snaptype == typeof(QuadrantSnapPoint))
+                    //{
+                    //	UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, 90);
+                    //	if (p != UnitPoint.Empty && HitUtil.PointInPoint(p, point, thWidth))
+                    //		return new QuadrantSnapPoint(canvas, this, p);
+                    //}
+
+                    
+                    if (snaptype == typeof(DivisionSnapPoint) && this.GetType().FullName=="Canvas.DrawTools.Circle")
+                    {
+                        double angle = 360 / Divisions;
+                        UnitPoint p = HitUtil.NearestPointOnCircle(m_center, m_radius, point, angle);
+                        if (p != UnitPoint.Empty && HitUtil.PointInPoint(p, point, thWidth))
+                            return new DivisionSnapPoint(canvas, this, p);
+                    }
+                    if (snaptype == typeof(DivisionSnapPoint))
+                    {
+                        //RadiusPoint
+                        return new NearestSnapPoint(canvas,this,RadiusPoint);
+                    }
+                    if (snaptype == typeof(CenterSnapPoint))
 					{
 						if (HitUtil.PointInPoint(m_center, point, thWidth))
 							return new CenterSnapPoint(canvas, this, m_center);
@@ -675,7 +682,7 @@ namespace Canvas.DrawTools
 			type2point,
 		}
         /// <summary>
-        /// 在指定画板上绘制节点
+        /// 在指定画板上绘制控制节点
         /// </summary>
         /// <param name="canvas"></param>
 		protected virtual void DrawNodes(ICanvas canvas)
