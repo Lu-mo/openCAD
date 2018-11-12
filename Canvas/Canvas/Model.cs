@@ -83,7 +83,19 @@ namespace Canvas
             DefaultLayer();
 			m_centerPoint = new UnitPoint(0,0);
 		}
-		public void AddDrawTool(string key, IDrawObject drawtool)
+        Color color;
+        public DataModel(Color color)//构造函数（初始化）
+        {
+            m_toolTypes.Clear();
+            m_toolTypes[DrawTools.Line.ObjectType] = typeof(DrawTools.Line);
+            m_toolTypes[DrawTools.Circle.ObjectType] = typeof(DrawTools.Circle);
+            m_toolTypes[DrawTools.Arc.ObjectType] = typeof(DrawTools.Arc);
+            m_toolTypes[DrawTools.Arc3Point.ObjectType] = typeof(DrawTools.Arc3Point);
+            this.color = color;
+            DefaultLayer();
+            m_centerPoint = new UnitPoint(0, 0);
+        }
+        public void AddDrawTool(string key, IDrawObject drawtool)
 		{
 			m_drawObjectTypes[key] = drawtool;
 		}/// <summary>
@@ -167,10 +179,12 @@ namespace Canvas
 		void DefaultLayer()
 		{
 			m_layers.Clear();
-			m_layers.Add(new DrawingLayer("layer0", "Hairline Layer", Color.White, 0.0f));
-			m_layers.Add(new DrawingLayer("layer1", "0.005 Layer", Color.Red, 0.005f));
-			m_layers.Add(new DrawingLayer("layer2", "0.025 Layer", Color.Green, 0.025f));
-		}
+            //m_layers.Add(new DrawingLayer("layer0", "Hairline Layer", Color.White, 0.0f));
+            //m_layers.Add(new DrawingLayer("layer1", "0.005 Layer", Color.Red, 0.005f));
+            //m_layers.Add(new DrawingLayer("layer2", "0.025 Layer", Color.Green, 0.025f));
+            m_layers.Add(new DrawingLayer("layer0", "Hairline Layer", color, 0.0f));
+            m_layers.Add(new DrawingLayer("layer1", "0.025 Layer", color, 0.025f));
+        }
 		public IDrawObject GetFirstSelected()
 		{
 			if (m_selection.Count > 0)

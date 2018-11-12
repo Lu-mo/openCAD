@@ -100,8 +100,13 @@ namespace Canvas
         /// <param name="unitWidth"></param>
         /// <returns></returns>
 		public Pen CreatePen(Color color, float unitWidth)
-		{
-			return m_canvas.CreatePen(color, unitWidth);
+		{         
+            Pen pen= m_canvas.CreatePen(color, unitWidth);
+            //if (isDot == 1)
+            //{
+            //pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            //}
+            return pen;
 		}
         /// <summary>
         /// ª≠œﬂ
@@ -652,28 +657,28 @@ namespace Canvas
             if (m_canvaswrapper.ScreenTopLeftToUnitPoint().X <= (-50))
             {
                 UnitPoint stl = m_canvaswrapper.ScreenTopLeftToUnitPoint();
-                double dis = (stl.X + 50) / 50;
+                double dis = (stl.X + 50);
                 m_lastCenterPoint.X = m_lastCenterPoint.X - dis;
                 SetCenter(m_lastCenterPoint);
             }
             if (m_canvaswrapper.ScreenTopLeftToUnitPoint().Y >= 50)
             {
                 UnitPoint stl = m_canvaswrapper.ScreenTopLeftToUnitPoint();
-                double dis = (stl.Y - 50) / 50;
+                double dis = (stl.Y - 50);
                 m_lastCenterPoint.Y = m_lastCenterPoint.Y - dis;
                 SetCenter(m_lastCenterPoint);
             }
             if (m_canvaswrapper.ScreenBottomRightToUnitPoint().X >= 50)
             {
                 UnitPoint sbr = m_canvaswrapper.ScreenBottomRightToUnitPoint();
-                double dis = (sbr.X - 50) / 50;
+                double dis = (sbr.X - 50);
                 m_lastCenterPoint.X = m_lastCenterPoint.X - dis;
                 SetCenter(m_lastCenterPoint);
             }
             if (m_canvaswrapper.ScreenBottomRightToUnitPoint().Y <= (-50))
             {
                 UnitPoint sbr = m_canvaswrapper.ScreenBottomRightToUnitPoint();
-                double dis = (sbr.Y + 50) / 50;
+                double dis = (sbr.Y + 50);
                 m_lastCenterPoint.Y = m_lastCenterPoint.Y - dis;
                 SetCenter(m_lastCenterPoint);
             }
@@ -988,7 +993,7 @@ namespace Canvas
 				m_penCache[width] = new Dictionary<Color,Pen>();
 			if (m_penCache[width].ContainsKey(color) == false)
 				m_penCache[width][color] = new Pen(color, width);
-			return m_penCache[width][color];
+            return m_penCache[width][color];
 		}
         /// <summary>
         /// ≥ı ºªØª≠± 

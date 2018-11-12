@@ -22,6 +22,7 @@ namespace Canvas
         /// 文件初始化
         /// </summary>
         /// <param name="filename"></param>
+        /// 
 		public DocumentForm(string filename)
 		{
 			InitializeComponent();
@@ -61,18 +62,81 @@ namespace Canvas
 			m_canvas.KeyDown += new KeyEventHandler(OnCanvasKeyDown);
 			SetupMenuItems();
 			SetupDrawTools();
-			//SetupLayerToolstrip();
+			SetupLayerToolstrip();
 			SetupEditTools();
-			//UpdateLayerUI();
+			UpdateLayerUI();
 
 			MenuStrip menuitem = new MenuStrip();
-			//menuitem.Items.Add(m_menuItems.GetMenuStrip("edit"));
-			menuitem.Items.Add(m_menuItems.GetMenuStrip("draw"));
+            menuitem.Items.Add(m_menuItems.GetMenuStrip("edit"));
+            menuitem.Items.Add(m_menuItems.GetMenuStrip("draw"));
 			menuitem.Visible = false;
 			Controls.Add(menuitem);
 			this.MainMenuStrip = menuitem;
 		}
-		protected override void OnLoad(EventArgs e)
+        public DocumentForm(string filename,String status)
+        {
+            InitializeComponent();
+            Color color = Color.White;
+            if (status.Equals("出题"))
+            {
+                color = Color.White;
+            }
+            if (status.Equals("标准答案"))
+            {
+                color = Color.Green;
+            }
+            if (status.Equals("答题"))
+            {
+                color = Color.Blue;
+            }
+            
+            Text = "<New Document>";
+            m_data = new DataModel(color);
+            if (filename.Length > 0 && File.Exists(filename) && m_data.Load(filename))
+            {
+                Text = filename;
+                m_filename = filename;
+            }
+
+            m_canvas = new CanvasCtrl(this, m_data);
+            m_canvas.Dock = DockStyle.Fill;
+            Controls.Add(m_canvas);
+            m_canvas.SetCenter(new UnitPoint(0, 0));
+            m_canvas.RunningSnaps = new Type[]
+                {
+                typeof(VertextSnapPoint),
+                typeof(MidpointSnapPoint),
+                typeof(IntersectSnapPoint),
+                typeof(QuadrantSnapPoint),
+                typeof(CenterSnapPoint),
+                typeof(DivisionSnapPoint),
+                };
+
+            m_canvas.AddQuickSnapType(Keys.N, typeof(NearestSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.M, typeof(MidpointSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.I, typeof(IntersectSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.V, typeof(VertextSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.P, typeof(PerpendicularSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.Q, typeof(QuadrantSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.C, typeof(CenterSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.T, typeof(TangentSnapPoint));
+            m_canvas.AddQuickSnapType(Keys.D, typeof(DivisionSnapPoint));
+
+            m_canvas.KeyDown += new KeyEventHandler(OnCanvasKeyDown);
+            SetupMenuItems();
+            SetupDrawTools();
+            SetupLayerToolstrip();
+            SetupEditTools();
+            UpdateLayerUI();
+
+            MenuStrip menuitem = new MenuStrip();
+            //menuitem.Items.Add(m_menuItems.GetMenuStrip("edit"));
+            menuitem.Items.Add(m_menuItems.GetMenuStrip("draw"));
+            menuitem.Visible = false;
+            Controls.Add(menuitem);
+            this.MainMenuStrip = menuitem;
+        }
+        protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
 			m_canvas.SetCenter(m_data.CenterPoint);
@@ -487,7 +551,7 @@ namespace Canvas
 		{
 			CommonTools.NameObject<DrawingLayer> selitem = m_layerCombo.SelectedItem as CommonTools.NameObject<DrawingLayer>;
 			if (selitem == null || selitem.Object != m_data.ActiveLayer)
-			{
+			{ 
 				foreach (CommonTools.NameObject<DrawingLayer> obj in m_layerCombo.Items)
 				{
 					if (obj.Object == m_data.ActiveLayer)

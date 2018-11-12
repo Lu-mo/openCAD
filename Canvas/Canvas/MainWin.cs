@@ -15,7 +15,7 @@ namespace Canvas
         public List<string> filePathList = new List<string>();
 
         MenuItemManager m_menuItems;
-        public MainWin()
+        public MainWin(String status)
         {
             ///p为三点中点
 			UnitPoint p = HitUtil.CenterPointFrom3Points(new UnitPoint(0, 2), new UnitPoint(1.4142136f, 1.4142136f), new UnitPoint(2, 0));
@@ -26,15 +26,16 @@ namespace Canvas
 
             //从某个文件打开时参数会有两个
             if (args.Length == 2)           // assume it points to a file
-                OpenDocument(args[1]);
+                OpenDocument(args[1], status);
             else
-                OpenDocument(string.Empty);
+                OpenDocument(string.Empty, status);
 
             m_menuItems = new MenuItemManager(this);
             m_menuItems.SetupStripPanels(); //初始化上下左右四个工具面板
             SetupToolbars();                //安装三个工具栏
 
             Application.Idle += new EventHandler(OnIdle);//添加触发,不断刷新三个控件
+            //OnFileOpen(id.ToString());
         }
 
         /// <summary>
@@ -44,33 +45,33 @@ namespace Canvas
         {
             //#region "文件"下拉菜单项通过MenuItemManager初始化
             //MenuItem mmitem = m_menuItems.GetItem("New");
-            ////mmitem.Text = "&New";
+            //mmitem.Text = "&New";
             //mmitem.Text = "&新建";
             //mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.NewDocument);
             //mmitem.Click += new EventHandler(OnFileNew);
             //mmitem.ToolTipText = "New document";
 
             //mmitem = m_menuItems.GetItem("Open");
-            ////mmitem.Text = "&Open";
+            //mmitem.Text = "&Open";
             //mmitem.Text = "&打开";
             //mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.OpenDocument);
             //mmitem.Click += new EventHandler(OnFileOpen);
             //mmitem.ToolTipText = "Open document";
 
             //mmitem = m_menuItems.GetItem("Save");
-            ////mmitem.Text = "&Save";
+            //mmitem.Text = "&Save";
             //mmitem.Text = "&保存";
             //mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.SaveDocument);
             //mmitem.Click += new EventHandler(OnFileSave);
             //mmitem.ToolTipText = "Save document";
 
             //mmitem = m_menuItems.GetItem("SaveAs");
-            ////mmitem.Text = "Save &As";
+            //mmitem.Text = "Save &As";
             //mmitem.Text = "另存为";
             //mmitem.Click += new EventHandler(OnFileSaveAs);
 
             //mmitem = m_menuItems.GetItem("Exit");
-            ////mmitem.Text = "E&xit";
+            //mmitem.Text = "E&xit";
             //mmitem.Text = "退出";
             //mmitem.Click += new EventHandler(OnFileExit);
             //#endregion
@@ -98,7 +99,7 @@ namespace Canvas
             #region 上左下菜单栏/状态栏设置控件
             ToolStripPanel panel = m_menuItems.GetStripPanel(DockStyle.Top);
 
-            //panel.Join(m_menuItems.GetStrip("layer"));
+            panel.Join(m_menuItems.GetStrip("layer"));
             panel.Join(m_menuItems.GetStrip("draw"));
             panel.Join(m_menuItems.GetStrip("edit"));
             //panel.Join(m_menuItems.GetStrip("file"));
@@ -203,6 +204,18 @@ namespace Canvas
                 return;
             }
             f = new DocumentForm(filename);
+            f.MdiParent = this;
+            f.WindowState = FormWindowState.Maximized;
+            f.Show();
+        }
+        void OpenDocument(string filename, String status)
+        {
+            if (this.ActiveMdiChild != null)
+            {
+                MessageBox.Show("请先关闭当前的文档", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            f = new DocumentForm(filename, status);
             f.MdiParent = this;
             f.WindowState = FormWindowState.Maximized;
             f.Show();

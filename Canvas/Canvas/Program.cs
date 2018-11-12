@@ -25,7 +25,7 @@ namespace Canvas
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWin());
+            Application.Run(new MainWin("´ðÌâ"));
 
             CommonTools.Tracing.Terminate();
         }
