@@ -50,12 +50,12 @@ namespace Canvas
         void SetupToolbars()
         {
             //#region "文件"下拉菜单项通过MenuItemManager初始化
-            //MenuItem mmitem = m_menuItems.GetItem("New");
-            //mmitem.Text = "&New";
-            //mmitem.Text = "&新建";
-            //mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.NewDocument);
-            //mmitem.Click += new EventHandler(OnFileNew);
-            //mmitem.ToolTipText = "New document";
+            // MenuItem mmitem = m_menuItems.GetItem("New");
+            // mmitem.Text = "&New";
+            // mmitem.Text = "&新建";
+            // mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.NewDocument);
+            // mmitem.Click += new EventHandler(OnFileNew);
+            // mmitem.ToolTipText = "New document";
 
             //mmitem = m_menuItems.GetItem("Open");
             //mmitem.Text = "&Open";
@@ -102,6 +102,8 @@ namespace Canvas
             //m_mainMenu.Items.Insert(0, menuitem);
             //#endregion
 
+            m_mainMenu.Visible = false;
+
             #region 上左下菜单栏/状态栏设置控件
             ToolStripPanel panel = m_menuItems.GetStripPanel(DockStyle.Top);
 
@@ -109,7 +111,7 @@ namespace Canvas
             panel.Join(m_menuItems.GetStrip("draw"));
             panel.Join(m_menuItems.GetStrip("edit"));
             //panel.Join(m_menuItems.GetStrip("file"));
-            panel.Join(m_mainMenu); //主菜单加入面板
+            //panel.Join(m_mainMenu); //主菜单加入面板
 
             panel = m_menuItems.GetStripPanel(DockStyle.Left);
             panel.Join(m_menuItems.GetStrip("modify")); //左侧修改栏

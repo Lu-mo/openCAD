@@ -238,11 +238,11 @@ namespace Canvas
             mmitem = m_menuItems.GetItem("Rectangle");
             mmitem.Text = "Rectangle";
             mmitem.ToolTipText = "Rectangle (R)";
-            //mmitem.Image = ;
+            mmitem.Image = DrawToolsImages16x16.Image(DrawToolsImages16x16.eIndexes.Rectangle);
             mmitem.Click += new EventHandler(OnToolSelect);
             mmitem.SingleKey = Keys.R;
             mmitem.ShortcutKeyDisplayString = "R";
-            mmitem.Tag = "rectangle";
+            mmitem.Tag = "Rectangle";
             m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.RectangleEdit());
 
             #endregion
@@ -294,6 +294,7 @@ namespace Canvas
             mmitem = m_menuItems.GetItem("Circle3Point");
             mmitem.Text = "Circle3Point";
             mmitem.ToolTipText = "Circle3Point";
+            mmitem.Image = DrawToolsImages16x16.Image(DrawToolsImages16x16.eIndexes.Circle3Point);
             //mmitem.Image = ;
             mmitem.Click += new EventHandler(OnToolSelect);
             //mmitem.SingleKey = Keys.B;
@@ -304,13 +305,13 @@ namespace Canvas
             #endregion
 
             mmitem = m_menuItems.GetItem("ArcCR");
-			mmitem.Text = "Arc CR";
-			mmitem.ToolTipText = "Arc Center-Radius";
+			mmitem.Text = "ArcCR";
+			mmitem.ToolTipText = "ArcCR";
 			mmitem.Image = DrawToolsImages16x16.Image(DrawToolsImages16x16.eIndexes.ArcCR);
 			mmitem.Click += new EventHandler(OnToolSelect);
 			mmitem.SingleKey = Keys.A;
 			mmitem.ShortcutKeyDisplayString = "A";
-			mmitem.Tag = "arcCR";
+			mmitem.Tag = "ArcCR";
 			m_data.AddDrawTool(mmitem.Tag.ToString(), new DrawTools.Arc(DrawTools.Arc.eArcType.typeCenterRadius));
 
             #region 添加的贝塞尔曲线工具
@@ -318,7 +319,7 @@ namespace Canvas
             mmitem = m_menuItems.GetItem("BezierCurve");
             mmitem.Text = "BezierCurve";
             mmitem.ToolTipText = "BezierCurve (B)";
-            //mmitem.Image = ;
+            mmitem.Image = DrawToolsImages16x16.Image(DrawToolsImages16x16.eIndexes.BezierCurve);
             mmitem.Click += new EventHandler(OnToolSelect);
             mmitem.SingleKey = Keys.B;
             mmitem.ShortcutKeyDisplayString = "B";
@@ -339,7 +340,7 @@ namespace Canvas
             strip.Items.Add(m_menuItems.GetItem("Circle3Point").CreateButton());//Circle3Point工具
             strip.Items.Add(m_menuItems.GetItem("BezierCurve").CreateButton());//Bezier curve工具
 
-   //         ToolStripMenuItem menu = m_menuItems.GetMenuStrip("draw");
+            //ToolStripMenuItem menu = m_menuItems.GetMenuStrip("draw");
 			//menu.MergeAction = System.Windows.Forms.MergeAction.Insert;
 			//menu.MergeIndex = 2;
 			//menu.Text = "Draw &Tools";
