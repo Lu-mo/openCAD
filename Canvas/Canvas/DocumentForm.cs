@@ -11,7 +11,7 @@ namespace Canvas
 {
 	public partial class DocumentForm : Form, ICanvasOwner, IEditToolOwner
 	{
-		CanvasCtrl m_canvas;
+        CanvasCtrl m_canvas;
 		DataModel m_data;
 
 		MenuItemManager m_menuItems = new MenuItemManager();

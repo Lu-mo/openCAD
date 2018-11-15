@@ -6,15 +6,20 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Threading;
+using System.Data.SqlClient;
+using System.IO;
 
 namespace Canvas
 {
     public partial class MainWin : Form
     {
         DocumentForm f;
+        string id=null;
         public List<string> filePathList = new List<string>();
 
         MenuItemManager m_menuItems;
+
         public MainWin(String status)
         {
             ///p为三点中点
@@ -35,6 +40,7 @@ namespace Canvas
             SetupToolbars();                //安装三个工具栏
 
             Application.Idle += new EventHandler(OnIdle);//添加触发,不断刷新三个控件
+
             //OnFileOpen(id.ToString());
         }
 
@@ -156,7 +162,105 @@ namespace Canvas
                     ((ToolStripPanel)ctrl).ResumeLayout();
             }
         }
+        /// <summary>
+        /// 读取从数据库题目
+        /// </summary>
+        /// <param name="id"></param>
+        void OnFileOpen(string id)
+        {
+            string connectionString = "";
+            SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
+            SqlCon.Open();
+            string sql = "";
+            SqlCommand com = new SqlCommand(sql, SqlCon);
+            SqlDataReader dr = com.ExecuteReader();
+            byte[] xmlbytes = (byte[])dr.GetValue(1);
+            string filePath = "c://" + id + ".cadxml";
+            byte2File(xmlbytes,filePath);
+            OpenDocument(filePath);
+            SqlCon.Close();
+        }
+        /// <summary>
+        /// 将答案传输到数据库
+        /// </summary>
+        void sendAnswer(string id) {
+            byte[] answer = File2byte("c://" + id + ".cadxml ");
+            string sql = "insert into pro_table (pro_name,pro_file) values('测试文件',@file)";
+            UpToSql(answer,sql);
+        }
+        /// <summary>
+        /// 传输截图
+        /// </summary>
+        /// <param name="id"></param>
+        void sendPic(string id)
+        {
+            byte[] pic = File2byte("c://" + id + ".jpg");
+            string sql = "insert into pro_table (pro_name,pro_file) values('测试文件',@file)";
+            UpToSql(pic, sql);
+        }
+        public void UpToSql(byte[] b,string sql)
+        {
+            string connectionString = "";
+            SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
+            SqlCon.Open();
+            SqlCommand com = new SqlCommand(sql, SqlCon);
+            com.Parameters.Add("@file", SqlDbType.Binary,b.Length);
+            com.Parameters["@file"].Value =b;
+            com.ExecuteNonQuery();
+            SqlCon.Close();
+        }
+        /// <summary>
+        /// byte转文件
+        /// </summary>
+        /// <param name="buf"></param>
+        /// <param name="filePath"></param>
+        public  void byte2File(byte[] buf, String filePath)
+        {
 
+            try
+            {
+                FileStream fs = new FileStream(filePath, FileMode.Create);
+                fs.Write(buf, 0, buf.Length);
+                fs.Close();
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("打开绘图失败，请在网页重新打开");
+                Close();
+            }
+        }
+        /// <summary>
+        /// 文件转byte
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public byte[] File2byte(String filePath)
+        {
+            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            try
+            {
+                byte[] buffur = new byte[fs.Length];
+                fs.Read(buffur, 0, (int)fs.Length);
+
+                return buffur;
+            }
+            catch (Exception ex)
+            {
+                //MessageBoxHelper.ShowPrompt(ex.Message);
+                return null;
+            }
+            finally
+            {
+                if (fs != null)
+                {
+
+                    //关闭资源
+                    fs.Close();
+                }
+            }
+        }
+        
         /// <summary>
         /// 文件打开按钮触发器,打开.cadxml文件
         /// </summary>
@@ -187,10 +291,10 @@ namespace Canvas
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void OnFileNew(object sender, EventArgs e)
-        {
-            OpenDocument(string.Empty);
-        }
+		//private void OnFileNew(object sender, EventArgs e)
+  //      {
+  //          OpenDocument(string.Empty);
+  //      }
 
         /// <summary>
         /// 根据文件名打开文件
@@ -237,10 +341,10 @@ namespace Canvas
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void OnFileExit(object sender, EventArgs e)
-        {
-            Close();
-        }
+		//private void OnFileExit(object sender, EventArgs e)
+  //      {
+  //          Close();
+  //      }
 
         /// <summary>
         /// 空的？
@@ -258,11 +362,11 @@ namespace Canvas
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void OnAbout(object sender, EventArgs e)
-        {
-            About dlg = new About();
-            dlg.ShowDialog(this);
-        }
+		//private void OnAbout(object sender, EventArgs e)
+  //      {
+  //          About dlg = new About();
+  //          dlg.ShowDialog(this);
+  //      }
 
         /// <summary>
         /// "选项"按钮触发器,Options.OptionsDlg没看不懂
@@ -321,6 +425,36 @@ namespace Canvas
                 }
             }
 ;
+        }
+        /// <summary>
+        /// 截屏
+        /// </summary>
+        /// <param name="id"></param>
+        private  void GetScreenCapture(String id)
+        {
+            Rectangle tScreenRect = new Rectangle(0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            Bitmap tSrcBmp = new Bitmap(this.Width, this.Height); // 用于屏幕原始图片保存
+            Graphics gp = Graphics.FromImage(tSrcBmp);
+            gp.CopyFromScreen(this.Location, Point.Empty, this.Size);
+            gp.DrawImage(tSrcBmp, 0, 0, new Rectangle(0,0, this.Width, this.Height), GraphicsUnit.Pixel);
+            Bitmap tSrcBmp2 = new Bitmap(1600,900);
+            tSrcBmp2 = tSrcBmp;
+            tSrcBmp2.Save(@"c:\" + id + ".jpg");
+        }
+
+        private void MainWin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.ActiveMdiChild.Refresh();
+            if (id != null) {
+                sendAnswer(id);
+                sendPic(id);
+            }
+            Thread.Sleep(100);
+            if (id != null)
+            {
+                GetScreenCapture(id);
+            }
         }
     }
 }

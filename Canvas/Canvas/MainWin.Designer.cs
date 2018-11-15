@@ -84,7 +84,7 @@ namespace Canvas
             this.m_mainMenu.Location = new System.Drawing.Point(0, 0);
             this.m_mainMenu.MdiWindowListItem = this.m_windowMenu;
             this.m_mainMenu.Name = "m_mainMenu";
-            this.m_mainMenu.Size = new System.Drawing.Size(803, 25);
+            this.m_mainMenu.Size = new System.Drawing.Size(803, 24);
             this.m_mainMenu.TabIndex = 0;
             // 
             // optionsToolStripMenuItem
@@ -100,7 +100,7 @@ namespace Canvas
             // optionsToolStripMenuItem1
             // 
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
             this.optionsToolStripMenuItem1.Tag = "Grid";
             this.optionsToolStripMenuItem1.Text = "Íø¸ñ";
             this.optionsToolStripMenuItem1.Click += new System.EventHandler(this.OnOptions);
@@ -108,7 +108,7 @@ namespace Canvas
             // layersToolStripMenuItem
             // 
             this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
-            this.layersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.layersToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.layersToolStripMenuItem.Tag = "Layers";
             this.layersToolStripMenuItem.Text = "Í¼²ã";
             this.layersToolStripMenuItem.Click += new System.EventHandler(this.OnOptions);
@@ -133,7 +133,7 @@ namespace Canvas
             // m_aboutMenuItem
             // 
             this.m_aboutMenuItem.Name = "m_aboutMenuItem";
-            this.m_aboutMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.m_aboutMenuItem.Size = new System.Drawing.Size(100, 22);
             this.m_aboutMenuItem.Text = "¹ØÓÚ";
             this.m_aboutMenuItem.Click += new System.EventHandler(this.OnAbout);
             // 
@@ -148,6 +148,7 @@ namespace Canvas
             this.Name = "MainWin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainWin";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWin_FormClosing);
             this.MdiChildActivate += new System.EventHandler(this.MainWin_MdiChildActivate);
             this.m_mainMenu.ResumeLayout(false);
             this.m_mainMenu.PerformLayout();
