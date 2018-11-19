@@ -18,7 +18,7 @@ namespace Canvas
 
             string Info;
             //xml文本比较
-            if (CommonTools.XmlComparator.BothXmlLoader("E:\\111.cadxml", "E:\\222.cadxml",out Info) == false)
+            if (CommonTools.XmlComparator.BothXmlLoader("E:\\circle3p.cadxml", "E:\\circleRa.cadxml",out Info) == false)
                 Console.WriteLine(Info);
 
             CommonTools.Tracing.AddId(TracePaint);

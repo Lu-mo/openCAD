@@ -89,14 +89,46 @@ namespace CommonTools
             //获得该节点的子节点（即：该节点的第一层子节点）
             XmlNodeList sProperty = s.ChildNodes;
             XmlNodeList aProperty = a.ChildNodes;
+
+            Dictionary<string, string> sd = new Dictionary<string, string>();
+            Dictionary<string, string> ad = new Dictionary<string, string>();
             //Console.WriteLine(sProperty.ToString());
-            for(int i=0;i<6;i++)
+            for (int i=0;i<sProperty.Count;i++)
             {
-                if (!sProperty.Item(i).Attributes.Item(0).Value.Equals(aProperty.Item(i).Attributes.Item(0).Value)) return false;
-                if (!sProperty.Item(i).Attributes.Item(1).Value.Equals(aProperty.Item(i).Attributes.Item(1).Value)) return false;
+                string style = sProperty.Item(i).Attributes.Item(0).Value;
+                if (!style.Equals("UseLayerWidth") && !style.Equals("UseLayerColor") && !style.Equals("Width") && !style.Equals("Color"))
+                {
+                    sd.Add(sProperty.Item(i).Attributes.Item(0).Value, sProperty.Item(i).Attributes.Item(1).Value);
+                    ad.Add(aProperty.Item(i).Attributes.Item(0).Value, aProperty.Item(i).Attributes.Item(1).Value);
+                }
+
+                //string temp = sProperty.Item(i).Attributes.Item(1).Value;
+                //if(temp.Contains("{X="))
+                //    Console.WriteLine(sProperty.Item(i).Attributes.Item(1).Value);
+                //if (!sProperty.Item(i).Attributes.Item(0).Value.Equals(aProperty.Item(i).Attributes.Item(0).Value)) return false;
+                //if (!sProperty.Item(i).Attributes.Item(1).Value.Equals(aProperty.Item(i).Attributes.Item(1).Value)) return false;
                 //Console.WriteLine(sProperty.Item(i).Attributes.Item(1).Value.ToString());
+
+            }
+
+
+            if(s.Name.Equals("arc"))
+            {
+
+            }
+            if (s.Name.Equals("circle"))
+            {
+                
             }
             return true;
+        }
+
+        public static bool isAllowableDeviation(double s,double a)
+        {
+            double allowableDeviation = 0.001;
+            if(Math.Abs(s-a)<=allowableDeviation)
+                return true;
+            return false;
         }
     }
     

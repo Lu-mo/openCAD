@@ -110,7 +110,7 @@ namespace Canvas
 		}
 
         /// <summary>
-        /// 重写ToString(),返回坐标
+        /// 重写ToString(),返回坐标,xml
         /// </summary>
         /// <returns>坐标</returns>
 		public override string ToString() 
