@@ -15,13 +15,23 @@ namespace Canvas
     public partial class MainWin : Form
     {
         DocumentForm f;
-        string id=null;
+        string id = null;
+        string testID=null;
+        string status = null;
         public List<string> filePathList = new List<string>();
 
         MenuItemManager m_menuItems;
-
-        public MainWin(String status)
+        /// <summary>
+        /// status为状态，答题时，testID为成绩表表名，id为题组ID
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="id"></param>
+        /// <param name="testId"></param>
+        public MainWin(string status,string id,string testID)
         {
+            this.id = id;
+            this.testID = testID;
+            this.status = status;
             ///p为三点中点
 			UnitPoint p = HitUtil.CenterPointFrom3Points(new UnitPoint(0, 2), new UnitPoint(1.4142136f, 1.4142136f), new UnitPoint(2, 0));
 
@@ -40,8 +50,12 @@ namespace Canvas
             SetupToolbars();                //安装三个工具栏
 
             Application.Idle += new EventHandler(OnIdle);//添加触发,不断刷新三个控件
+            if (status.Equals("答题")|| status.Equals("标准答案"))
+            {
 
-            //OnFileOpen(id.ToString());
+                string sql = "select id form 作图题库 where id in(select 作图题题目序号 from 题组库 where id=" + id + ")";
+                OnFileOpen(id, testID,sql);
+            }           
         }
 
         /// <summary>
@@ -165,42 +179,74 @@ namespace Canvas
         /// <summary>
         /// 读取从数据库题目
         /// </summary>
-        /// <param name="id"></param>
-        void OnFileOpen(string id)
+        /// <param name="id"></param>   
+        void OnFileOpen(string id,string testID,string sql)
         {
-            string connectionString = "";
-            SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
-            SqlCon.Open();
-            string sql = "";
-            SqlCommand com = new SqlCommand(sql, SqlCon);
-            SqlDataReader dr = com.ExecuteReader();
-            byte[] xmlbytes = (byte[])dr.GetValue(1);
-            string filePath = "c://" + id + ".cadxml";
-            byte2File(xmlbytes,filePath);
-            OpenDocument(filePath);
-            SqlCon.Close();
+            try
+            {
+                string connectionString = @"server = ADONIS\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
+                SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
+                SqlCon.Open();
+                SqlCommand com = new SqlCommand(sql, SqlCon);
+                SqlDataReader dr = com.ExecuteReader();
+                byte[] xmlbytes = (byte[])dr.GetValue(1);
+                string filePath = "c://" + id + ".cadxml";
+                byte2File(xmlbytes, filePath);
+                OpenDocument(filePath);
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         /// <summary>
         /// 将答案传输到数据库
         /// </summary>
-        void sendAnswer(string id) {
+        void sendAnswer(string id,string testID,string stauts) {
             byte[] answer = File2byte("c://" + id + ".cadxml ");
-            string sql = "insert into pro_table (pro_name,pro_file) values('测试文件',@file)";
+            string sql;
+            if (status.Equals("答题"))
+            {
+                sql = "insert into " + testID + " (画图题答案) values('文件',@file)";
+            }
+            else if (status.Equals("出题"))
+            {
+                sql = "insert into 作图题库 (作图题题目) values('文件',@file)";
+            }
+            else 
+            {
+                sql = "insert into 作图题库 (作图题答案） values('文件',@file)";
+            }
             UpToSql(answer,sql);
         }
         /// <summary>
         /// 传输截图
         /// </summary>
         /// <param name="id"></param>
-        void sendPic(string id)
+        void sendPic(string id, string testID ,string status)
         {
             byte[] pic = File2byte("c://" + id + ".jpg");
-            string sql = "insert into pro_table (pro_name,pro_file) values('测试文件',@file)";
+            string sql;
+            if (status.Equals("答题"))
+            {
+                sql = "insert into " + testID + "(画图题答案) values('文件',@file)";
+            }
+            else if (status.Equals("出题"))
+            {
+                sql = "insert into 作图题库 (作图题题目图片) values('文件',@file)";
+            }
+            else
+            {
+                sql = "insert into 作图题库 (作图题答案图片) values('文件',@file)";
+            }
+            
             UpToSql(pic, sql);
         }
         public void UpToSql(byte[] b,string sql)
         {
-            string connectionString = "";
+            string connectionString = @"server = ADONIS\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
             SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
             SqlCon.Open();
             SqlCommand com = new SqlCommand(sql, SqlCon);
@@ -446,14 +492,23 @@ namespace Canvas
         {
             this.WindowState = FormWindowState.Maximized;
             this.ActiveMdiChild.Refresh();
-            if (id != null) {
-                sendAnswer(id);
-                sendPic(id);
-            }
-            Thread.Sleep(100);
-            if (id != null)
+            try
             {
-                GetScreenCapture(id);
+                if (id != null)
+                {
+                    sendAnswer(id, testID, status);
+                }
+                Thread.Sleep(100);
+                if (id != null)
+                {
+                    GetScreenCapture(id);
+                    sendPic(id, testID, status);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

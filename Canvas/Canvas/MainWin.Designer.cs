@@ -135,8 +135,8 @@ namespace Canvas
             this.m_aboutMenuItem.Name = "m_aboutMenuItem";
             this.m_aboutMenuItem.Size = new System.Drawing.Size(100, 22);
             this.m_aboutMenuItem.Text = "¹ØÓÚ";
-            this.m_aboutMenuItem.Click += new System.EventHandler(this.OnAbout);
-            // 
+            //this.m_aboutMenuItem.Click += new System.EventHandler(this.OnAbout);
+            //// 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
