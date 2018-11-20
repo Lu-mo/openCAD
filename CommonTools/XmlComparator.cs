@@ -96,11 +96,11 @@ namespace CommonTools
             for (int i=0;i<sProperty.Count;i++)
             {
                 string style = sProperty.Item(i).Attributes.Item(0).Value;
-                if (!style.Equals("UseLayerWidth") && !style.Equals("UseLayerColor") && !style.Equals("Width") && !style.Equals("Color"))
-                {
+                //if (!style.Equals("UseLayerWidth") && !style.Equals("UseLayerColor") && !style.Equals("Width") && !style.Equals("Color"))
+                
                     sd.Add(sProperty.Item(i).Attributes.Item(0).Value, sProperty.Item(i).Attributes.Item(1).Value);
                     ad.Add(aProperty.Item(i).Attributes.Item(0).Value, aProperty.Item(i).Attributes.Item(1).Value);
-                }
+                
 
                 //string temp = sProperty.Item(i).Attributes.Item(1).Value;
                 //if(temp.Contains("{X="))
@@ -111,7 +111,7 @@ namespace CommonTools
 
             }
 
-
+            if(s.Name.Equals("line"))
             if(s.Name.Equals("arc"))
             {
 

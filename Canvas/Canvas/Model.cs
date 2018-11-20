@@ -82,6 +82,7 @@ namespace Canvas
             m_toolTypes[DrawTools.Circle3Point.ObjectType] = typeof(DrawTools.Circle3Point);
             DefaultLayer();
 			m_centerPoint = new UnitPoint(0,0);
+            Console.WriteLine("DataModel()");
 		}
         Color color;
         public DataModel(Color color)//构造函数（初始化）
@@ -90,7 +91,10 @@ namespace Canvas
             m_toolTypes[DrawTools.Line.ObjectType] = typeof(DrawTools.Line);
             m_toolTypes[DrawTools.Circle.ObjectType] = typeof(DrawTools.Circle);
             m_toolTypes[DrawTools.Arc.ObjectType] = typeof(DrawTools.Arc);
-            m_toolTypes[DrawTools.Arc3Point.ObjectType] = typeof(DrawTools.Arc3Point);
+            //m_toolTypes[DrawTools.Arc3Point.ObjectType] = typeof(DrawTools.Arc3Point);
+            m_toolTypes[DrawTools.Rectangle.ObjectType] = typeof(DrawTools.Rectangle);
+            m_toolTypes[DrawTools.BezierCurve.ObjectType] = typeof(DrawTools.BezierCurve);
+            //m_toolTypes[DrawTools.Circle3Point.ObjectType] = typeof(DrawTools.Circle3Point);
             this.color = color;
             DefaultLayer();
             m_centerPoint = new UnitPoint(0, 0);

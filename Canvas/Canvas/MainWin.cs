@@ -179,7 +179,7 @@ namespace Canvas
             byte[] xmlbytes = (byte[])dr.GetValue(1);
             string filePath = "c://" + id + ".cadxml";
             byte2File(xmlbytes,filePath);
-            OpenDocument(filePath);
+            OpenDocument(filePath,"´ðÌâ");
             SqlCon.Close();
         }
         /// <summary>
@@ -273,7 +273,7 @@ namespace Canvas
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Cad XML files (*.cadxml)|*.cadxml";
             if (dlg.ShowDialog(this) == DialogResult.OK)
-                OpenDocument(dlg.FileName);
+                OpenDocument(dlg.FileName,"´ðÌâ");
         }
 
         /// <summary>

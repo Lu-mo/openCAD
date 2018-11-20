@@ -197,7 +197,7 @@ namespace Canvas.DrawTools
         //}
         public static string ObjectType//获取类型
         {
-            get { return "Rectangle"; }
+            get { return "rectangle"; }
         }
 
         static int ThresholdPixel = 6;//像素值

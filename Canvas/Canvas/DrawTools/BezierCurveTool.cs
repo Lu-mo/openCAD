@@ -232,7 +232,7 @@ namespace Canvas.DrawTools
 
         public static string ObjectType//获取类型
         {
-            get { return "BezierCurve"; }
+            get { return "bezierCurve"; }
         }
 
         /// <summary>
