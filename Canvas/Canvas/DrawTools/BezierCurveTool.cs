@@ -332,7 +332,7 @@ namespace Canvas.DrawTools
         /// <returns></returns>
         string IDrawObject.GetInfoAsString()
         {
-            return string.Format("BezierCurve@{0},{1} - L={2:f4}<{3:f4}",
+            return string.Format("bezierCurve@{0},{1} - L={2:f4}<{3:f4}",
                 P1.PosAsString(),
                 P4.PosAsString(),
                 HitUtil.Distance(P1, P4),
@@ -345,7 +345,7 @@ namespace Canvas.DrawTools
         /// <param name="wr"></param>
         public void GetObjectData(XmlWriter wr)
         {
-            wr.WriteStartElement("BezierCurve");///元素名
+            wr.WriteStartElement("bezierCurve");///元素名
             XmlUtil.WriteProperties(this, wr);
             wr.WriteEndElement();
         }
@@ -612,7 +612,7 @@ namespace Canvas.DrawTools
         public override string Id
         {
             get
-            { return "BezierCurve"; }
+            { return "bezierCurve"; }
         }
 
         /// <summary>

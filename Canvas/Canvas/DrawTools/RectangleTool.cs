@@ -655,7 +655,7 @@ namespace Canvas.DrawTools
         /// <param name="wr"></param>
         public void GetObjectData(XmlWriter wr)
         {
-            wr.WriteStartElement("Rectangle");///元素名
+            wr.WriteStartElement("rectangle");///元素名
             XmlUtil.WriteProperties(this, wr);
             wr.WriteEndElement();
         }
@@ -679,7 +679,7 @@ namespace Canvas.DrawTools
         public override string Id
         {
             get
-            { return "Rectangle";}
+            { return "rectangle";}
         }
         //public RectangleEdit(bool rectangle): base()
         //{
