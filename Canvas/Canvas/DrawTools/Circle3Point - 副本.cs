@@ -10,127 +10,6 @@ using System.Xml;
 namespace Canvas.DrawTools
 {
 
-    class NodePointCircleCenter : INodePoint
-    {
-        protected Circle3Point m_owner;
-        protected Circle3Point m_clone;
-        protected UnitPoint m_originalPoint;
-        protected UnitPoint m_endPoint;
-        protected UnitPoint m_p1;
-        protected UnitPoint m_p2;
-        protected UnitPoint m_p3;
-        public NodePointCircleCenter(Circle3Point owner)
-        {
-            m_owner = owner;
-            m_clone = m_owner.Clone() as Circle3Point;
-            Console.WriteLine("!!" + m_clone.P1.X + " " + m_clone.P1.Y);
-
-            m_originalPoint = m_owner.Center;
-            Console.WriteLine("!!" + m_clone.Center.X + " " + m_clone.Center.Y);
-            m_p1 = owner.P1;
-            m_p2 = owner.P2;
-            m_p3 = owner.P3;
-        }
-        #region INodePoint Members
-        public IDrawObject GetClone()
-        {
-            return m_clone;
-        }
-        public IDrawObject GetOriginal()
-        {
-            return m_owner;
-        }
-        public virtual void SetPosition(UnitPoint pos)
-        {
-            m_clone.Center = pos;
-        }
-        public virtual void Finish()
-        {
-            UnitPoint offset =new UnitPoint( m_clone.Center.X - m_endPoint.X, m_clone.Center.Y - m_endPoint.Y);
-            m_endPoint = m_clone.Center;
-            m_owner.Center = m_clone.Center;
-            m_owner.Radius = m_clone.Radius;
-            //m_p1 = m_clone.P1;
-            //m_p2 = m_clone.P2;
-            //m_p3 = m_clone.P3;
-            //Console.WriteLine("!!"+m_p1.X + " " + m_p1.Y);
-            m_p1 += offset;
-            m_p2 += offset;
-            m_p3 += offset;
-            //Console.WriteLine(m_p1.X+" "+m_p1.Y);
-            
-            m_owner.Selected = true;
-            m_clone = null;
-        }
-        public void Cancel()
-        {
-            m_owner.Selected = true;
-        }
-        public virtual void Undo()
-        {
-            m_owner.Center = m_originalPoint;
-        }
-        public virtual void Redo()
-        {
-            m_owner.Center = m_endPoint;
-        }
-        public void OnKeyDown(ICanvas canvas, KeyEventArgs e)
-        {
-        }
-        #endregion
-    }
-
-    class NodePointCircleRadius : INodePoint
-    {
-        protected Circle3Point m_owner;
-        protected Circle3Point m_clone;
-        protected float m_originalValue;
-        protected float m_endValue;
-        public NodePointCircleRadius(Circle3Point owner)
-        {
-            m_owner = owner;
-            m_clone = m_owner.Clone() as Circle3Point;
-            m_clone.CurrentPoint = m_owner.CurrentPoint;
-            m_originalValue = m_owner.Radius;
-        }
-        #region INodePoint Members
-        public IDrawObject GetClone()
-        {
-            return m_clone;
-        }
-        public IDrawObject GetOriginal()
-        {
-            return m_owner;
-        }
-        public virtual void SetPosition(UnitPoint pos)
-        {
-            m_clone.OnMouseMove(null, pos);
-        }
-        public virtual void Finish()
-        {
-            m_endValue = m_clone.Radius;
-            m_owner.Radius = m_clone.Radius;
-            m_owner.Selected = true;
-            m_clone = null;
-        }
-        public void Cancel()
-        {
-            m_owner.Selected = true;
-        }
-        public virtual void Undo()
-        {
-            m_owner.Radius = m_originalValue;
-        }
-        public virtual void Redo()
-        {
-            m_owner.Radius = m_endValue;
-        }
-        public void OnKeyDown(ICanvas canvas, KeyEventArgs e)
-        {
-        }
-        #endregion
-    }
-
     class Circle3Point : DrawObjectBase, IArc, IDrawObject, ISerialize
     {
 
@@ -325,8 +204,6 @@ namespace Canvas.DrawTools
                     DrawUtils.DrawNode(canvas, P2);
                 if (m_p3.IsEmpty == false)
                     DrawUtils.DrawNode(canvas, P3);
-                if (m_center.IsEmpty == false)
-                    DrawUtils.DrawNode(canvas, Center);
             }
         }
 
@@ -388,20 +265,21 @@ namespace Canvas.DrawTools
 
         public virtual INodePoint NodePoint(ICanvas canvas, UnitPoint point)
         {
-            Console.WriteLine(m_p1.X+" "+m_p1.Y);
             float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
-            if (HitUtil.PointInPoint(Center, point, thWidth))//圓心位移
-                return new NodePointCircleCenter(this);
-            bool radiushit = HitUtil.PointInPoint(m_p1, point, thWidth);
+            if (HitUtil.PointInPoint(Center, point, thWidth))
+                return new NodePointArcCenter(this);
+            bool radiushit = HitUtil.PointInPoint(AnglePoint(0), point, thWidth);
             if (radiushit == false)
-                radiushit = HitUtil.PointInPoint(m_p2, point, thWidth);
+                radiushit = HitUtil.PointInPoint(AnglePoint(90), point, thWidth);
             if (radiushit == false)
-                radiushit = HitUtil.PointInPoint(m_p3, point, thWidth);
+                radiushit = HitUtil.PointInPoint(AnglePoint(180), point, thWidth);
+            if (radiushit == false)
+                radiushit = HitUtil.PointInPoint(AnglePoint(270), point, thWidth);
             if (radiushit)
             {
                 m_curPoint = eCurrentPoint.radius;
                 m_lastPoint = Center;
-                return new NodePointCircleRadius(this);
+                return new NodePointArcRadius(this);
             }
             return null;
 
@@ -439,7 +317,7 @@ namespace Canvas.DrawTools
             //    m_lastPoint = p;
             //    return new NodePointArc3PointPoint(this, eCurrentPoint.radius);
             //}
-            return null;
+            //return null;
         }
 
         public virtual bool ObjectInRectangle(ICanvas canvas, RectangleF rect, bool anyPoint)

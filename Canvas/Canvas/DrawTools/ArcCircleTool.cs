@@ -32,7 +32,8 @@ namespace Canvas.DrawTools
 			m_owner = owner;
 			m_clone = m_owner.Clone() as Arc;
 			m_originalPoint = m_owner.Center;
-		}
+            Console.WriteLine("!!" + m_clone.Center.X + " " + m_clone.Center.Y);
+        }
 		#region INodePoint Members
 		public IDrawObject GetClone()
 		{
