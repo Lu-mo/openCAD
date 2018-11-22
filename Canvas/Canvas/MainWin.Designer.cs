@@ -84,7 +84,7 @@ namespace Canvas
             this.m_mainMenu.Location = new System.Drawing.Point(0, 0);
             this.m_mainMenu.MdiWindowListItem = this.m_windowMenu;
             this.m_mainMenu.Name = "m_mainMenu";
-            this.m_mainMenu.Size = new System.Drawing.Size(803, 24);
+            this.m_mainMenu.Size = new System.Drawing.Size(803, 25);
             this.m_mainMenu.TabIndex = 0;
             // 
             // optionsToolStripMenuItem
@@ -135,8 +135,7 @@ namespace Canvas
             this.m_aboutMenuItem.Name = "m_aboutMenuItem";
             this.m_aboutMenuItem.Size = new System.Drawing.Size(100, 22);
             this.m_aboutMenuItem.Text = "¹ØÓÚ";
-            //this.m_aboutMenuItem.Click += new System.EventHandler(this.OnAbout);
-            //// 
+            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -170,7 +169,5 @@ namespace Canvas
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem layersToolStripMenuItem;
-
-
-	}
+    }
 }

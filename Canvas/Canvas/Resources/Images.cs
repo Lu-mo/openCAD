@@ -54,13 +54,16 @@ namespace Canvas
 			Pan,
 			Move,
 			Line,
-			CircleCR,
+            CircleCR,
 			Circle2P,
 			ArcCR,
 			Arc2P,
 			Arc3P132,
 			Arc3P123,
-		}
+            Circle3Point,
+            Rectangle,
+            BezierCurve,
+        }
 		static public ImageList ImageList()
 		{
 			Type t = typeof(MenuImages16x16);

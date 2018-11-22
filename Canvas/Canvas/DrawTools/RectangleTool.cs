@@ -197,7 +197,7 @@ namespace Canvas.DrawTools
         //}
         public static string ObjectType//获取类型
         {
-            get { return "Rectangle"; }
+            get { return "rectangle"; }
         }
 
         static int ThresholdPixel = 6;//像素值
@@ -655,7 +655,7 @@ namespace Canvas.DrawTools
         /// <param name="wr"></param>
         public void GetObjectData(XmlWriter wr)
         {
-            wr.WriteStartElement("Rectangle");///元素名
+            wr.WriteStartElement("rectangle");///元素名
             XmlUtil.WriteProperties(this, wr);
             wr.WriteEndElement();
         }
@@ -679,7 +679,7 @@ namespace Canvas.DrawTools
         public override string Id
         {
             get
-            { return "Rectangle";}
+            { return "rectangle";}
         }
         //public RectangleEdit(bool rectangle): base()
         //{

@@ -157,19 +157,19 @@ namespace Canvas.DrawTools
 		UnitPoint m_p1 = UnitPoint.Empty;
 		UnitPoint m_p2 = UnitPoint.Empty;
 		UnitPoint m_p3 = UnitPoint.Empty;
-		[XmlSerializable]
+		//[XmlSerializable]
 		public UnitPoint P1
 		{
 			get { return m_p1; }
 			set { m_p1 = value; }
 		}
-		[XmlSerializable]
+		//[XmlSerializable]
 		public UnitPoint P2
 		{
 			get { return m_p2; }
 			set { m_p2 = value; }
 		}
-		[XmlSerializable]
+		//[XmlSerializable]
 		public UnitPoint P3
 		{
 			get { return m_p3; }
@@ -181,25 +181,25 @@ namespace Canvas.DrawTools
 		float m_radius;
 		float m_startAngle = 0;
 		float m_endAngle = 0;
-		//[XmlSerializable]
+		[XmlSerializable]
 		public UnitPoint Center
 		{
 			get { return m_center; }
 			set { m_center = value; }
 		}
-		//[XmlSerializable]
+		[XmlSerializable]
 		public float Radius
 		{
 			get { return m_radius; }
 			set { m_radius = value; }
 		}
-		//[XmlSerializable]
+		[XmlSerializable]
 		public float StartAngle
 		{
 			get { return m_startAngle; }
 			set { m_startAngle = value; }
 		}
-		//[XmlSerializable]
+		[XmlSerializable]
 		public float EndAngle
 		{
 			get { return m_endAngle; }
@@ -215,7 +215,7 @@ namespace Canvas.DrawTools
 
 		public static string ObjectType
 		{
-			get { return "arc3p"; }
+			get { return "arc"; }
 		}
 
 		public Arc3Point()
