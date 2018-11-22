@@ -21,8 +21,8 @@ namespace Canvas.DrawTools
         static bool m_angleLocked = false;
         BezierCurve m_owner;
         BezierCurve m_clone;
-        protected UnitPoint[] m_originalPoints = new UnitPoint[4];
-        protected UnitPoint[] m_endPoints = new UnitPoint[4];
+        protected UnitPoint m_originalPoint;
+        protected UnitPoint m_endPoint ;
         ePoint m_pointId;
         protected Arc3Point.eCurrentPoint m_curPoint;
         //private BezierCurve bezierCurve;
@@ -30,32 +30,31 @@ namespace Canvas.DrawTools
 
         public BezierCurveTool(BezierCurve owner, ePoint id)
         {
+            
             m_owner = owner;
             m_clone = m_owner.Clone() as BezierCurve;
             m_pointId = id;
-            m_originalPoints[0] = m_owner.P1;
-            m_originalPoints[1] = m_owner.P2;
-            m_originalPoints[2] = m_owner.P3;
-            m_originalPoints[3] = m_owner.P4;
+            m_originalPoint = GetPoint(m_pointId);
+            Console.WriteLine("finish  " + m_pointId + "  " + m_clone.P1.X + "，" + m_clone.P1.Y + "  " + m_clone.P2.X + "，" + m_clone.P2.Y + "  " + m_clone.P3.X + "，" + m_clone.P3.Y + "  " + m_clone.P4.X + "，" + m_clone.P4.Y + "  ");
         }
 
-        ///// <summary>
-        ///// 获取端点
-        ///// </summary>
-        ///// <param name="pointid"></param>
-        ///// <returns></returns>
-        //protected UnitPoint GetPoint(ePoint pointid)
-        //{
-        //    if (pointid == ePoint.P1)
-        //        return m_clone.P1;
-        //    if (pointid == ePoint.P2)
-        //        return m_clone.P2;
-        //    if (pointid == ePoint.P3)
-        //        return m_clone.P3;
-        //    if (pointid == ePoint.P4)
-        //        return m_clone.P4;
-        //    return m_owner.P1;
-        //}
+        /// <summary>
+        /// 获取端点
+        /// </summary>
+        /// <param name="pointid"></param>
+        /// <returns></returns>
+        protected UnitPoint GetPoint(ePoint pointid)
+        {
+            if (pointid == ePoint.P1)
+                return m_clone.P1;
+            if (pointid == ePoint.P2)
+                return m_clone.P2;
+            if (pointid == ePoint.P3)
+                return m_clone.P3;
+            if (pointid == ePoint.P4)
+                return m_clone.P4;
+            return m_owner.P1;
+        }
 
 
         /// <summary>
@@ -71,15 +70,12 @@ namespace Canvas.DrawTools
         /// </summary>
         public void Finish()
         {
-            m_endPoints[0] = m_clone.P1;
-            m_endPoints[1] = m_clone.P2;
-            m_endPoints[2] = m_clone.P3;
-            m_endPoints[3] = m_clone.P4;
-            //m_endPoint = GetPoint(m_pointId);
-            //m_owner.P1 = m_clone.P1;
-            //m_owner.P2 = m_clone.P2;
-            //m_owner.P3 = m_clone.P3;
-            //m_owner.P4 = m_clone.P4;
+            Console.WriteLine("finish  "+m_pointId + "  " + m_clone.P1.X + "，" + m_clone.P1.Y + "  " + m_clone.P2.X + "，" + m_clone.P2.Y + "  " + m_clone.P3.X + "，" + m_clone.P3.Y + "  " + m_clone.P4.X + "，" + m_clone.P4.Y + "  ");
+            m_endPoint = GetPoint(m_pointId);
+            m_owner.P1 = m_clone.P1;
+            m_owner.P2 = m_clone.P2;
+            m_owner.P3 = m_clone.P3;
+            m_owner.P4 = m_clone.P4;
             m_clone = null;
         }
 
@@ -100,11 +96,11 @@ namespace Canvas.DrawTools
         /// <param name="e"></param>
 		public void OnKeyDown(ICanvas canvas, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.B)
-            {
-                m_angleLocked = !m_angleLocked;
-                e.Handled = true;
-            }
+            //if (e.KeyCode == Keys.B)
+            //{
+            //    m_angleLocked = !m_angleLocked;
+            //    e.Handled = true;
+            //}
         }
         /// <summary>
         /// 前进
@@ -112,10 +108,10 @@ namespace Canvas.DrawTools
         public void Redo()
         {
             //SetPoint(m_pointId, m_endPoint, m_owner);
-            m_owner.P1 = m_endPoints[0];
-            m_owner.P2 = m_endPoints[1];
-            m_owner.P3 = m_endPoints[2];
-            m_owner.P4 = m_endPoints[3];
+            //m_owner.P1 = m_endPoints[0];
+            //m_owner.P2 = m_endPoints[1];
+            //m_owner.P3 = m_endPoints[2];
+            //m_owner.P4 = m_endPoints[3];
             //m_owner.UpdateBezierCurve();
         }
         /// <summary>
@@ -123,10 +119,10 @@ namespace Canvas.DrawTools
         /// </summary>
 		public void Undo()
         {
-            m_owner.P1 = m_originalPoints[0];
-            m_owner.P2 = m_originalPoints[1];
-            m_owner.P3 = m_originalPoints[2];
-            m_owner.P4 = m_originalPoints[3];
+            //m_owner.P1 = m_originalPoints[0];
+            //m_owner.P2 = m_originalPoints[1];
+            //m_owner.P3 = m_originalPoints[2];
+            //m_owner.P4 = m_originalPoints[3];
             //m_owner.UpdateBezierCurve();
             //SetPoint(m_pointId, m_originalPoint, m_owner);
         }
@@ -170,7 +166,7 @@ namespace Canvas.DrawTools
             //    pos = HitUtil.OrthoPointD(OtherPoint(m_pointId), pos, 45);
             //if (m_angleLocked || Control.ModifierKeys == (Keys)(Keys.Control | Keys.Shift))//如果角度被锁定且按下crtl或shifr则设定为点到直线最近距离直线上的点？？
             //    pos = HitUtil.NearestPointOnLine(m_owner.P1, m_owner.P2, pos, true);
-            //SetPoint(m_pointId, pos, m_clone);//设置线上的点（p1,p2）的信息。
+            SetPoint(m_pointId, pos, m_clone);//设置线上的点（p1,p2）的信息。
         }
     }
 
@@ -259,6 +255,17 @@ namespace Canvas.DrawTools
             BezierCurve b = new BezierCurve();
             b.Copy(this);
             return b;
+        }
+        public virtual void Copy(BezierCurve acopy)
+        {
+            base.Copy(acopy);
+            m_p1 = acopy.m_p1;
+            m_p2 = acopy.m_p2;
+
+            m_p3 = acopy.m_p3;
+            m_p4 = acopy.m_p4;
+
+            Selected = acopy.Selected;
         }
         /// <summary>
         /// 
@@ -735,6 +742,7 @@ namespace Canvas.DrawTools
             b.Copy(this);
             return b;
         }
+
         public IDrawObject GetDrawObject()
         {
             return new BezierCurve(P1,P2,P3,P4,Width,Color);
