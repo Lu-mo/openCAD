@@ -156,7 +156,7 @@ namespace Canvas
 
 			mmitem = m_menuItems.GetItem("Redo");
 			mmitem.Text = "Redo";
-			mmitem.ToolTipText = "Undo (Ctrl-Y)";
+			mmitem.ToolTipText = "Redo (Ctrl-Y)";
 			mmitem.Image = MenuImages16x16.Image(MenuImages16x16.eIndexes.Redo);
 			mmitem.Click += new EventHandler(OnRedo);
 			mmitem.ShortcutKeys = Shortcut.CtrlY;

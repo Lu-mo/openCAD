@@ -16,9 +16,6 @@ namespace Canvas.DrawTools
         protected Circle3Point m_clone;
         protected UnitPoint m_originalPoint;
         protected UnitPoint m_endPoint;
-        protected UnitPoint m_p1;
-        protected UnitPoint m_p2;
-        protected UnitPoint m_p3;
         public NodePointCircleCenter(Circle3Point owner)
         {
             m_owner = owner;
@@ -26,10 +23,7 @@ namespace Canvas.DrawTools
             Console.WriteLine("!!" + m_clone.P1.X + " " + m_clone.P1.Y);
 
             m_originalPoint = m_owner.Center;
-            Console.WriteLine("!!" + m_clone.Center.X + " " + m_clone.Center.Y);
-            m_p1 = owner.P1;
-            m_p2 = owner.P2;
-            m_p3 = owner.P3;
+            Console.WriteLine("!!" + m_clone.P1.X + " " + m_clone.P1.Y);
         }
         #region INodePoint Members
         public IDrawObject GetClone()
@@ -46,18 +40,15 @@ namespace Canvas.DrawTools
         }
         public virtual void Finish()
         {
-            UnitPoint offset =new UnitPoint( m_clone.Center.X - m_endPoint.X, m_clone.Center.Y - m_endPoint.Y);
+            UnitPoint offset =new UnitPoint( m_clone.Center.X - m_owner.Center.X, m_clone.Center.Y - m_owner.Center.Y);
             m_endPoint = m_clone.Center;
             m_owner.Center = m_clone.Center;
             m_owner.Radius = m_clone.Radius;
-            //m_p1 = m_clone.P1;
-            //m_p2 = m_clone.P2;
-            //m_p3 = m_clone.P3;
-            //Console.WriteLine("!!"+m_p1.X + " " + m_p1.Y);
-            m_p1 += offset;
-            m_p2 += offset;
-            m_p3 += offset;
-            //Console.WriteLine(m_p1.X+" "+m_p1.Y);
+            
+            m_owner.P1 += offset;
+            m_owner.P2 += offset;
+            m_owner.P3 += offset;
+            
             
             m_owner.Selected = true;
             m_clone = null;
@@ -68,11 +59,24 @@ namespace Canvas.DrawTools
         }
         public virtual void Undo()
         {
+            UnitPoint offset = new UnitPoint(m_originalPoint.X - m_owner.Center.X, m_originalPoint.Y - m_owner.Center.Y);
+
+            m_owner.P1 += offset;
+            m_owner.P2 += offset;
+            m_owner.P3 += offset;
             m_owner.Center = m_originalPoint;
+
+            
         }
         public virtual void Redo()
         {
+            UnitPoint offset = new UnitPoint(m_endPoint.X - m_owner.Center.X, m_endPoint.Y - m_owner.Center.Y);
+
+            m_owner.P1 += offset;
+            m_owner.P2 += offset;
+            m_owner.P3 += offset;
             m_owner.Center = m_endPoint;
+            
         }
         public void OnKeyDown(ICanvas canvas, KeyEventArgs e)
         {
@@ -108,6 +112,7 @@ namespace Canvas.DrawTools
         }
         public virtual void Finish()
         {
+
             m_endValue = m_clone.Radius;
             m_owner.Radius = m_clone.Radius;
             m_owner.Selected = true;
@@ -388,7 +393,7 @@ namespace Canvas.DrawTools
 
         public virtual INodePoint NodePoint(ICanvas canvas, UnitPoint point)
         {
-            Console.WriteLine(m_p1.X+" "+m_p1.Y);
+            //Console.WriteLine(m_p1.X+" "+m_p1.Y);
             float thWidth = Line.ThresholdWidth(canvas, Width, ThresholdPixel);
             if (HitUtil.PointInPoint(Center, point, thWidth))//圓心位移
                 return new NodePointCircleCenter(this);
