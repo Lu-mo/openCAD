@@ -186,8 +186,10 @@ namespace Canvas
             //m_layers.Add(new DrawingLayer("layer0", "Hairline Layer", Color.White, 0.0f));
             //m_layers.Add(new DrawingLayer("layer1", "0.005 Layer", Color.Red, 0.005f));
             //m_layers.Add(new DrawingLayer("layer2", "0.025 Layer", Color.Green, 0.025f));
-            m_layers.Add(new DrawingLayer("layer0", "Hairline Layer", color, 0.0f));
-            m_layers.Add(new DrawingLayer("layer1", "0.025 Layer", color, 0.025f));
+            m_layers.Add(new DrawingLayer("layer0", "细线", color, 0.0f));
+            m_layers.Add(new DrawingLayer("layer0", "粗线", color, 0.025f));
+            m_layers.Add(new DrawingLayer("layer1", "虚细线", Color.Pink, 0.0f));
+            m_layers.Add(new DrawingLayer("layer1", "虚粗线", Color.Pink, 0.025f));
         }
 		public IDrawObject GetFirstSelected()
 		{

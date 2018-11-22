@@ -102,10 +102,10 @@ namespace Canvas
 		public Pen CreatePen(Color color, float unitWidth)
 		{         
             Pen pen= m_canvas.CreatePen(color, unitWidth);
-            //if (isDot == 1)
-            //{
-            //pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            //}
+            if (color==Color.Pink)
+            {
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            }
             return pen;
 		}
         /// <summary>
