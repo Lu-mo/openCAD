@@ -35,7 +35,7 @@ namespace Canvas.DrawTools
             m_clone = m_owner.Clone() as BezierCurve;
             m_pointId = id;
             m_originalPoint = GetPoint(m_pointId);
-            Console.WriteLine("finish  " + m_pointId + "  " + m_clone.P1.X + "，" + m_clone.P1.Y + "  " + m_clone.P2.X + "，" + m_clone.P2.Y + "  " + m_clone.P3.X + "，" + m_clone.P3.Y + "  " + m_clone.P4.X + "，" + m_clone.P4.Y + "  ");
+            //Console.WriteLine("finish  " + m_pointId + "  " + m_clone.P1.X + "，" + m_clone.P1.Y + "  " + m_clone.P2.X + "，" + m_clone.P2.Y + "  " + m_clone.P3.X + "，" + m_clone.P3.Y + "  " + m_clone.P4.X + "，" + m_clone.P4.Y + "  ");
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Canvas.DrawTools
         /// </summary>
         public void Finish()
         {
-            Console.WriteLine("finish  "+m_pointId + "  " + m_clone.P1.X + "，" + m_clone.P1.Y + "  " + m_clone.P2.X + "，" + m_clone.P2.Y + "  " + m_clone.P3.X + "，" + m_clone.P3.Y + "  " + m_clone.P4.X + "，" + m_clone.P4.Y + "  ");
+            //Console.WriteLine("finish  "+m_pointId + "  " + m_clone.P1.X + "，" + m_clone.P1.Y + "  " + m_clone.P2.X + "，" + m_clone.P2.Y + "  " + m_clone.P3.X + "，" + m_clone.P3.Y + "  " + m_clone.P4.X + "，" + m_clone.P4.Y + "  ");
             m_endPoint = GetPoint(m_pointId);
             m_owner.P1 = m_clone.P1;
             m_owner.P2 = m_clone.P2;
