@@ -329,7 +329,7 @@ namespace Canvas
             #endregion
 
             ToolStrip strip = m_menuItems.GetStrip("draw");
-			strip.Items.Add(m_menuItems.GetItem("Lines").CreateButton());
+			strip.Items.Add(m_menuItems.GetItem("Line").CreateButton());
             strip.Items.Add(m_menuItems.GetItem("Rectangle").CreateButton());//¾ØÐÎ¹¤¾ß
             strip.Items.Add(m_menuItems.GetItem("Circle2P").CreateButton());
 			strip.Items.Add(m_menuItems.GetItem("CircleCR").CreateButton());

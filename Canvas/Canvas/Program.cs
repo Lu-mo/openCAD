@@ -23,6 +23,8 @@ namespace Canvas
                 col = HttpUtility.ParseQueryString(queryString);
             }
             //CommonTools.Tracing.EnableTrace();
+            col["stauts"] = "³öÌâ";
+            col["testID"] = "111";
             string status = col["stauts"].ToString();
             string id;
             string testID;

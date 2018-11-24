@@ -131,7 +131,8 @@ namespace Canvas
             panel.Join(m_menuItems.GetStrip("draw"));
             panel.Join(m_menuItems.GetStrip("edit"));
             //panel.Join(m_menuItems.GetStrip("file"));
-            panel.Join(m_mainMenu); //主菜单加入面板
+            //panel.Join(m_mainMenu); //主菜单加入面板
+            m_mainMenu.Visible = false; //隐身空白面板
 
             panel = m_menuItems.GetStripPanel(DockStyle.Left);
             panel.Join(m_menuItems.GetStrip("modify")); //左侧修改栏
@@ -517,8 +518,7 @@ namespace Canvas
             }
             catch (Exception)
             {
-
-                throw;
+                
             }
         }
     }

@@ -107,11 +107,7 @@ namespace Canvas.DrawTools
         /// </summary>
         public void Redo()
         {
-            //SetPoint(m_pointId, m_endPoint, m_owner);
-            //m_owner.P1 = m_endPoints[0];
-            //m_owner.P2 = m_endPoints[1];
-            //m_owner.P3 = m_endPoints[2];
-            //m_owner.P4 = m_endPoints[3];
+            SetPoint(m_pointId, m_endPoint, m_owner);
             //m_owner.UpdateBezierCurve();
         }
         /// <summary>
@@ -119,12 +115,8 @@ namespace Canvas.DrawTools
         /// </summary>
 		public void Undo()
         {
-            //m_owner.P1 = m_originalPoints[0];
-            //m_owner.P2 = m_originalPoints[1];
-            //m_owner.P3 = m_originalPoints[2];
-            //m_owner.P4 = m_originalPoints[3];
             //m_owner.UpdateBezierCurve();
-            //SetPoint(m_pointId, m_originalPoint, m_owner);
+            SetPoint(m_pointId, m_originalPoint, m_owner);
         }
         /// <summary>
         /// 设置端点
@@ -162,11 +154,7 @@ namespace Canvas.DrawTools
         /// <param name="pos"></param>
 		public void SetPosition(UnitPoint pos)
         {
-            //if (Control.ModifierKeys == Keys.Control)//如果按下ctrl，则以45度角找邻点
-            //    pos = HitUtil.OrthoPointD(OtherPoint(m_pointId), pos, 45);
-            //if (m_angleLocked || Control.ModifierKeys == (Keys)(Keys.Control | Keys.Shift))//如果角度被锁定且按下crtl或shifr则设定为点到直线最近距离直线上的点？？
-            //    pos = HitUtil.NearestPointOnLine(m_owner.P1, m_owner.P2, pos, true);
-            SetPoint(m_pointId, pos, m_clone);//设置线上的点（p1,p2）的信息。
+            SetPoint(m_pointId, pos, m_clone);//设置動點的信息。
         }
     }
 
