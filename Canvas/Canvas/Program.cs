@@ -23,9 +23,7 @@ namespace Canvas
                 col = HttpUtility.ParseQueryString(queryString);
             }
             //CommonTools.Tracing.EnableTrace();
-            col["stauts"] = "出题";
-            col["testID"] = "111";
-            string status = col["stauts"].ToString();
+            string status = col["status"].ToString();
             string id;
             string testID;
             string stuID;
@@ -39,13 +37,14 @@ namespace Canvas
             {
                 id = "11";
                 testID = col["testID"].ToString();
+                //testID = "9";
                 stuID = "11";
             }
           
             string Info;
             //xml文本比较
-            if (CommonTools.XmlComparator.BothXmlLoader("E:\\111.cadxml", "E:\\222.cadxml", out Info) == false)
-                Console.WriteLine(Info);
+            //if (CommonTools.XmlComparator.BothXmlLoader("E:\\111.cadxml", "E:\\222.cadxml", out Info) == false)
+            //    Console.WriteLine(Info);
 
             CommonTools.Tracing.AddId(TracePaint);
 

@@ -23,7 +23,7 @@ namespace Canvas
 
         MenuItemManager m_menuItems;
         /// <summary>
-        /// status为状态，答题时，testID为成绩表表名，id为题组ID,stuID为学号
+        /// status为状态，答题时，testID为成绩表表名，id为卷名,stuID为姓名
         /// 出题时,testID为题库题目ID
         /// 标准答案时,testID为题库题目ID
         /// </summary>
@@ -56,13 +56,14 @@ namespace Canvas
             Application.Idle += new EventHandler(OnIdle);//添加触发,不断刷新三个控件
             if (status.Equals("答题"))
             {
-                string sql = "select 作图题 form 作图题库 where id in(select 作图题题目序号 from 题组库 where id=" + id + ")";
+                string sql = "select 作图题题目 from 作图题库 where id in(select 作图题题目序号 from 题组库 where 卷名=" + id + ")";
                 OnFileOpen(sql);
             }
             if (status.Equals("标准答案"))
             {
-                string sql = "select 作图题 form 作图题库 whrer id=" + testID;
+                string sql = "select 作图题题目 from 作图题库 where id=" + testID;
                 OnFileOpen(sql);
+                //OpenDocument("D://9.cadxml", status);
             }
         }
 
@@ -193,40 +194,44 @@ namespace Canvas
         {
             try
             {
-                string connectionString = @"server = ADONIS\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
+                string connectionString = @"server=172.16.167.107,1433\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
                 SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
                 SqlCon.Open();
                 SqlCommand com = new SqlCommand(sql, SqlCon);
                 SqlDataReader dr = com.ExecuteReader();
-                byte[] xmlbytes = (byte[])dr.GetValue(1);
-                string filePath = "c://" + this.id + ".cadxml";
+                byte[] xmlbytes=null;
+                while (dr.Read())
+                {
+                    xmlbytes = (byte[])dr["作图题题目"];
+                }
+                string filePath =  @"D:\" + testID + ".cadxml";
                 byte2File(xmlbytes, filePath);
-                OpenDocument(filePath);
+                OpenDocument(filePath,status);
                 SqlCon.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show(e.Message);
 
-                throw;
             }
         }
         /// <summary>
         /// 将答案传输到数据库
         /// </summary>
         void sendAnswer(string stauts) {
-            byte[] answer = File2byte("c://" + id + ".cadxml ");
+            byte[] answer = File2byte(  @"D:\" + testID + ".cadxml");
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "insert into " + this.testID + " (画图题答案) values(@file) where 学号="+this.stuID;
+                sql = "insert into " + this.testID + " (姓名,画图题答案) values("+this.stuID+",@file)";
             }
             else if (status.Equals("出题"))
             {
-                sql = "insert into 作图题库 (id,作图题题目) values("+this.testID+",@file)";
+                sql = "insert into 作图题库 (作图题题目) values(@file)";
             }
             else 
             {
-                sql = "insert into 作图题库 (作图题答案） values(@file) where id="+this.testID;
+                sql = "UPDATE 作图题库 set 作图题答案=@file where id=" + this.testID;
             }
             UpToSql(answer,sql);
         }
@@ -236,35 +241,44 @@ namespace Canvas
         /// <param name="id"></param>
         void sendPic(string status)
         {
-            byte[] pic = File2byte("c://" + id + ".jpg");
+            byte[] pic = File2byte(  @"D:\" + testID + ".jpg");
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "insert into " + this.testID + "(画图题答案) values(@file) where 学号="+this.stuID;
+                sql = "UPDATE " + this.testID + " set 画图题答案=@file where 姓名="+this.stuID;
             }
             else if (status.Equals("出题"))
             {
-                sql = "insert into 作图题库 (作图题题目图片) values(@file) where id=" + this.testID;
+                sql = "UPDATE  作图题库 set 作图题题目图片=@file where id=" + this.testID;
             }
             else
             {
-                sql = "insert into 作图题库 (作图题答案图片) values(@file) where id=" + this.testID;
+                sql = "UPDATE 作图题库 set 作图题答案图片=@file where id=" + this.testID;
             }
-            
             UpToSql(pic, sql);
-            File.Delete("c://" + id + ".jpg");
-            File.Delete("c://" + id + ".cadxml");
+            File.Delete(@"D:\" + testID + ".jpg");
+            File.Delete(@"D:\" + testID + ".cadxml");
         }
         public void UpToSql(byte[] b,string sql)
         {
-            string connectionString = @"server = ADONIS\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
+            string connectionString = @"server=172.16.167.107,1433\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
             SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
-            SqlCon.Open();
-            SqlCommand com = new SqlCommand(sql, SqlCon);
-            com.Parameters.Add("@file", SqlDbType.Binary,b.Length);
-            com.Parameters["@file"].Value =b;
-            com.ExecuteNonQuery();
-            SqlCon.Close();
+            try
+            {
+                SqlCon.Open();
+                SqlCommand com = new SqlCommand(sql, SqlCon);
+                com.Parameters.Add("@file", SqlDbType.Binary, b.Length);
+                com.Parameters["@file"].Value = b;
+                com.ExecuteNonQuery();
+                
+            }
+            catch (Exception e) {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                SqlCon.Close();
+            }
         }
         /// <summary>
         /// byte转文件
@@ -364,19 +378,20 @@ namespace Canvas
                 MessageBox.Show("请先关闭当前的文档", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            f = new DocumentForm(filename);
+            f = new DocumentForm(filename,status,testID);
             f.MdiParent = this;
             f.WindowState = FormWindowState.Maximized;
             f.Show();
         }
-        void OpenDocument(string filename, String status)
+        void OpenDocument(string filename, string status)
         {
+           
             if (this.ActiveMdiChild != null)
             {
                 MessageBox.Show("请先关闭当前的文档", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            f = new DocumentForm(filename, status);
+            f = new DocumentForm(filename, status,testID);
             f.MdiParent = this;
             f.WindowState = FormWindowState.Maximized;
             f.Show();
@@ -496,7 +511,7 @@ namespace Canvas
             gp.DrawImage(tSrcBmp, 0, 0, new Rectangle(0,0, this.Width, this.Height), GraphicsUnit.Pixel);
             Bitmap tSrcBmp2 = new Bitmap(1600,900);
             tSrcBmp2 = tSrcBmp;
-            tSrcBmp2.Save(@"c:\" + id + ".jpg");
+            tSrcBmp2.Save(  @"D:\" + testID + ".jpg");
         }
 
         private void MainWin_FormClosing(object sender, FormClosingEventArgs e)

@@ -13,7 +13,7 @@ namespace Canvas
 	{
         CanvasCtrl m_canvas;
 		DataModel m_data;
-
+        string testID;
 		MenuItemManager m_menuItems = new MenuItemManager();
 		
 		public string m_filename = string.Empty;   //文件名
@@ -29,11 +29,11 @@ namespace Canvas
 
 			Text = "<New Document>";
 			m_data = new DataModel();
-			if (filename.Length > 0 && File.Exists(filename) && m_data.Load(filename))
-			{
-				Text = filename;
-				m_filename = filename;
-			}
+			//if (filename.Length > 0 && File.Exists(filename) && m_data.Load(filename))
+			//{
+			//	Text = filename;
+			//	m_filename = filename;
+			//}
 
 			m_canvas = new CanvasCtrl(this, m_data);
 			m_canvas.Dock = DockStyle.Fill;
@@ -73,13 +73,14 @@ namespace Canvas
 			Controls.Add(menuitem);
 			this.MainMenuStrip = menuitem;
 		}
-        public DocumentForm(string filename,String status)
+        public DocumentForm(string filename,string status,string testID)
         {
+            this.testID = testID;
             InitializeComponent();
             Color color = Color.White;
             if (status.Equals("出题"))
             {
-                color = Color.White;
+                color = Color.Blue;
             }
             if (status.Equals("标准答案"))
             {
@@ -418,6 +419,9 @@ namespace Canvas
 			int index = 1;
 			foreach (DrawingLayer layer in m_data.Layers)
 			{
+                if (index >= 5) {
+                    break;
+                }
 				string name = string.Format("({0}) - {1}", index, layer.Name);
 
 				MenuItem mmitem = m_menuItems.GetItem(name);
@@ -450,7 +454,8 @@ namespace Canvas
 		public void Save()
 		{
 			UpdateData();
-			if (m_filename.Length == 0)
+            m_filename= @"D:\" + testID + ".cadxml";
+            if (m_filename.Length == 0)
 				SaveAs();
 			else
 				m_data.Save(m_filename);
@@ -459,17 +464,19 @@ namespace Canvas
 		public void SaveAs()
 		{
 			UpdateData();
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Cad XML files (*.cadxml)|*.cadxml";
-			dlg.OverwritePrompt = true;
-			if (m_filename.Length > 0)
-				dlg.FileName = m_filename;
-			if (dlg.ShowDialog(this) == DialogResult.OK)
-			{
-				m_filename = dlg.FileName;
-				m_data.Save(m_filename);
-				Text = m_filename;
-			}
+            //SaveFileDialog dlg = new SaveFileDialog();
+            //dlg.Filter = "Cad XML files (*.cadxml)|*.cadxml";
+            //dlg.OverwritePrompt = true;
+            //if (m_filename.Length > 0)
+            //	dlg.FileName = m_filename;
+            //if (dlg.ShowDialog(this) == DialogResult.OK)
+            //{
+            //	m_filename = dlg.FileName;
+            //	m_data.Save(m_filename);
+            //	Text = m_filename;
+            //}
+            m_filename = @"D:\" + testID + ".cadxml";
+            m_data.Save(m_filename);
 		}
 
 		public CanvasCtrl Canvas
