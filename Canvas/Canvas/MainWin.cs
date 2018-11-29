@@ -23,7 +23,7 @@ namespace Canvas
 
         MenuItemManager m_menuItems;
         /// <summary>
-        /// status为状态，答题时，testID为成绩表表名，id为卷名,stuID为姓名
+        /// status为状态，答题时，testID绘图题第几题，id为卷名,stuID为姓名
         /// 出题时,testID为题库题目ID
         /// 标准答案时,testID为题库题目ID
         /// </summary>
@@ -58,6 +58,10 @@ namespace Canvas
             {
                 string sql = "select 作图题题目 from 作图题库 where id in(select 作图题题目序号 from 题组库 where 卷名=" + id + ")";
                 OnFileOpen(sql);
+            }
+            if (status.Equals("修改答案"))
+            {
+                string sql = "select ";
             }
             if (status.Equals("标准答案"))
             {
@@ -223,13 +227,17 @@ namespace Canvas
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "insert into " + this.testID + " (姓名,画图题答案) values("+this.stuID+",@file)";
+                sql = "insert into testScore_" + this.id + " (姓名,画图题答案"+this.testID+") values('" + this.stuID + "',@file)";
+            }
+            else if (status.Equals("修改答案")) {
+
+                sql = "update testScore_" + this.id + "set 画图题答案"+this.testID+"=@file where 姓名='" + this.stuID + "'";
             }
             else if (status.Equals("出题"))
             {
                 sql = "insert into 作图题库 (作图题题目) values(@file)";
             }
-            else 
+            else
             {
                 sql = "UPDATE 作图题库 set 作图题答案=@file where id=" + this.testID;
             }
@@ -245,7 +253,11 @@ namespace Canvas
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "UPDATE " + this.testID + " set 画图题答案=@file where 姓名="+this.stuID;
+                sql = "UPDATE testScore_" + this.id + " set 画图题答案"+ this.testID + "=@file where 姓名=" + this.stuID;
+            }
+            else if (status.Equals("修改答案"))
+            {
+                sql = "UPDATE testScore_" + this.id + " set 画图题答案"+this.testID+"=@file where 姓名=" + this.stuID;
             }
             else if (status.Equals("出题"))
             {

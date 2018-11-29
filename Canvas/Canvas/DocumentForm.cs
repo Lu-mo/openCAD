@@ -86,7 +86,7 @@ namespace Canvas
             {
                 color = Color.Green;
             }
-            if (status.Equals("答题"))
+            if (status.Equals("答题")||status.Equals("修改答案"))
             {
                 color = Color.Blue;
             }

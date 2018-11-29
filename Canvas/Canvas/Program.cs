@@ -27,7 +27,7 @@ namespace Canvas
             string id;
             string testID;
             string stuID;
-            if (status.Equals("答题"))
+            if (status.Equals("答题")||status.Equals("修改答案"))
             {
                 id = col["id"].ToString();
                 testID = col["testID"].ToString();
