@@ -23,7 +23,7 @@ namespace Canvas
         string className = null;
         string school = null;
         public List<string> filePathList = new List<string>();
-
+        string connectionString = @"server=DESKTOP-BLPK865\SQLEXPRESS; database = CAD-题组信息; uid = sa; pwd = 123456";
         MenuItemManager m_menuItems;
         /// <summary>
         /// status为状态，答题时，testID绘图题第几题，id为卷名,stuID为姓名
@@ -62,12 +62,16 @@ namespace Canvas
             Application.Idle += new EventHandler(OnIdle);//添加触发,不断刷新三个控件
             if (status.Equals("答题"))
             {
-                string sql = "select 作图题题目 from 作图题库 where id in(select 作图题题目序号 from 题组库 where 卷名=" + examName + ")";
+                string sql = "declare @num int " +
+                    "exec @num = findOrderNum '"+examName+"',"+testID+" " +
+                    "print @num " +
+                    "select 作图题题目 from 作图题库 where id=@num";
                 OnFileOpen(sql);
             }
             if (status.Equals("修改答案"))
             {
-                string sql = "select ";
+                string sql = "use [CAD__"+school+"] select 画图题答案"+testID+" from testScore_"+examName+" where 学号='"+this.stuID+"'";
+                OnFileOpen(sql);
             }
             if (status.Equals("标准答案"))
             {
@@ -204,7 +208,7 @@ namespace Canvas
         {
             try
             {
-                string connectionString = @"server=172.16.167.107,1433\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
+                
                 SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
                 SqlCon.Open();
                 SqlCommand com = new SqlCommand(sql, SqlCon);
@@ -212,7 +216,7 @@ namespace Canvas
                 byte[] xmlbytes=null;
                 while (dr.Read())
                 {
-                    xmlbytes = (byte[])dr["作图题题目"];
+                    xmlbytes = (byte[])dr[0];
                 }
                 string filePath =  @"D:\" + testID + ".cadxml";
                 byte2File(xmlbytes, filePath);
@@ -233,20 +237,21 @@ namespace Canvas
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "insert into testScore_" + this.examName + " (姓名,画图题答案"+this.testID+") values('" + this.stuID + "',@file)";
+                sql = "use [CAD__"+school+"] insert into testScore_" + this.examName + " (学号,画图题答案"+this.testID+") values('" + this.stuID + "',@file)";
             }
             else if (status.Equals("修改答案")) {
 
-                sql = "update testScore_" + this.examName + "set 画图题答案"+this.testID+"=@file where 姓名='" + this.stuID + "'";
+                sql = "use [CAD__" + school + "] update testScore_" + this.examName + "set 画图题答案"+this.testID+"=@file where 学号='" + this.stuID + "'";
             }
             else if (status.Equals("出题"))
             {
                 sql = "insert into 作图题库 (作图题题目) values(@file)";
             }
-            else
+            else 
             {
                 sql = "UPDATE 作图题库 set 作图题答案=@file where id=" + this.testID;
             }
+
             UpToSql(answer,sql);
         }
         /// <summary>
@@ -259,11 +264,11 @@ namespace Canvas
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "UPDATE testScore_" + this.examName + " set 画图题答案"+ this.testID + "=@file where 姓名=" + this.stuID;
+                sql = "use [CAD__" + school + "] UPDATE testScore_" + this.examName + " set 画图题答案图片"+ this.testID + "=@file where 学号=" + this.stuID;
             }
             else if (status.Equals("修改答案"))
             {
-                sql = "UPDATE testScore_" + this.examName + " set 画图题答案"+this.testID+"=@file where 姓名=" + this.stuID;
+                sql = "use [CAD__" + school + "] UPDATE testScore_" + this.examName + " set 画图题答案图片"+this.testID+"=@file where 学号=" + this.stuID;
             }
             else if (status.Equals("出题"))
             {
@@ -279,7 +284,7 @@ namespace Canvas
         }
         public void UpToSql(byte[] b,string sql)
         {
-            string connectionString = @"server=172.16.167.107,1433\SQLEXPRESS; database = CAD; uid = sa; pwd = 123456";
+            
             SqlConnection SqlCon = new SqlConnection(connectionString); //数据库连接
             try
             {

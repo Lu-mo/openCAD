@@ -23,9 +23,10 @@ namespace Canvas
                 col = HttpUtility.ParseQueryString(queryString);
             }
             //CommonTools.Tracing.EnableTrace();
-            if (col["status"] != null)
-            {
-                string status = col["status"].ToString();
+            //if (col["status"] != null)
+            //{
+            //string status = col["status"].ToString();
+                string status = "修改答案";
                 string examName;
                 string testID;
                 string stuID;
@@ -34,12 +35,18 @@ namespace Canvas
                 string school;
                 if (status.Equals("答题") || status.Equals("修改答案"))
                 {
-                    examName = col["examName"].ToString();
-                    testID = col["testID"].ToString();
-                    stuID = col["stuID"].ToString();
-                    stuName = col["stuName"].ToString();
-                    className = col["className"].ToString();
-                    school = col["school"].ToString();
+                //examName = col["examName"].ToString();
+                //testID = col["testID"].ToString();
+                //stuID = col["stuID"].ToString();
+                //stuName = col["stuName"].ToString();
+                //className = col["className"].ToString();
+                //school = col["school"].ToString();
+                examName = "juan10";
+                testID = "1";
+                stuID = "16240070";
+                stuName = "yxt";
+                className = "1701";
+                school = "深职院";
                 }
                 else
                 {
@@ -64,7 +71,7 @@ namespace Canvas
                 Application.Run(new MainWin(status, examName, testID, stuID, stuName, className, school));
 
                 CommonTools.Tracing.Terminate();
-            }
+            //}
         }
     }
 }
