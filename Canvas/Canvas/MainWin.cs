@@ -15,8 +15,8 @@ namespace Canvas
     public partial class MainWin : Form
     {
         DocumentForm f;
-        string  examName = null;
-        string testID=null;
+        string examName = null;
+        string testID = null;
         string status = null;
         string stuID = null;
         string stuName = null;
@@ -25,6 +25,8 @@ namespace Canvas
         public List<string> filePathList = new List<string>();
         string connectionString = @"server=DESKTOP-BLPK865\SQLEXPRESS; database = CAD-题组信息; uid = sa; pwd = 123456";
         MenuItemManager m_menuItems;
+        public int flag=1;
+   
         /// <summary>
         /// status为状态，答题时，testID绘图题第几题，id为卷名,stuID为姓名
         /// 出题时,testID为题库题目ID
@@ -225,7 +227,7 @@ namespace Canvas
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
 
             }
         }
@@ -241,7 +243,7 @@ namespace Canvas
             }
             else if (status.Equals("修改答案")) {
 
-                sql = "use [CAD__" + school + "] update testScore_" + this.examName + "set 画图题答案"+this.testID+"=@file where 学号='" + this.stuID + "'";
+                sql = "use [CAD__" + school + "] update testScore_" + this.examName + " set 画图题答案"+this.testID+"=@file where 学号='" + this.stuID + "'";
             }
             else if (status.Equals("出题"))
             {
@@ -296,7 +298,7 @@ namespace Canvas
                 
             }
             catch (Exception e) {
-                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
             }
             finally
             {
@@ -401,7 +403,7 @@ namespace Canvas
                 MessageBox.Show("请先关闭当前的文档", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            f = new DocumentForm(filename,status,testID);
+                //f = new DocumentForm(filename, status, testID); 
             f.MdiParent = this;
             f.WindowState = FormWindowState.Maximized;
             f.Show();
@@ -414,7 +416,9 @@ namespace Canvas
                 MessageBox.Show("请先关闭当前的文档", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            f = new DocumentForm(filename, status,testID);
+
+            f = new DocumentForm(filename, status, testID);
+            f.getForm(this);
             f.MdiParent = this;
             f.WindowState = FormWindowState.Maximized;
             f.Show();
@@ -543,12 +547,12 @@ namespace Canvas
             this.ActiveMdiChild.Refresh();
             try
             {
-                if (examName != null)
+                if (examName != null && flag==1)
                 {
                     sendAnswer(status);
                 }
                 Thread.Sleep(100);
-                if (examName != null)
+                if (examName != null && flag==1)
                 {
                     GetScreenCapture(examName);
                     sendPic(status);

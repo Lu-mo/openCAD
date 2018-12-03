@@ -17,7 +17,7 @@ namespace Canvas
 		MenuItemManager m_menuItems = new MenuItemManager();
 		
 		public string m_filename = string.Empty;   //文件名
-
+        public MainWin mainWin = null;
         /// <summary>
         /// 文件初始化
         /// </summary>
@@ -142,7 +142,10 @@ namespace Canvas
 			base.OnLoad(e);
 			m_canvas.SetCenter(m_data.CenterPoint);
 		}
-
+        public void getForm(MainWin mainWin)
+        {
+            this.mainWin = mainWin;
+        }
         /// <summary>
         /// 初始化菜单项
         /// </summary>
@@ -648,6 +651,10 @@ namespace Canvas
 					e.Cancel = true;
 					return;
 				}
+                if(result==DialogResult.No)
+                {
+                    this.mainWin.flag = -1;
+                }
 				if (result == DialogResult.Yes)
 					Save();
 			}
