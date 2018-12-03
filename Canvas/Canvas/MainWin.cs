@@ -15,10 +15,13 @@ namespace Canvas
     public partial class MainWin : Form
     {
         DocumentForm f;
-        string id = null;
+        string  examName = null;
         string testID=null;
         string status = null;
         string stuID = null;
+        string stuName = null;
+        string className = null;
+        string school = null;
         public List<string> filePathList = new List<string>();
 
         MenuItemManager m_menuItems;
@@ -28,14 +31,17 @@ namespace Canvas
         /// 标准答案时,testID为题库题目ID
         /// </summary>
         /// <param name="status"></param>
-        /// <param name="id"></param>
+        /// <param name="examName"></param>
         /// <param name="testId"></param>
-        public MainWin(string status,string id,string testID,string stuID)
+        public MainWin(string status,string examName,string testID,string stuID,string stuName,string className,string school)
         {
-            this.id = id;
+            this.examName = examName;
             this.testID = testID;
             this.status = status;
             this.stuID = stuID;
+            this.stuName = stuName;
+            this.className = className;
+            this.school = school;
             ///p为三点中点
 			UnitPoint p = HitUtil.CenterPointFrom3Points(new UnitPoint(0, 2), new UnitPoint(1.4142136f, 1.4142136f), new UnitPoint(2, 0));
 
@@ -56,7 +62,7 @@ namespace Canvas
             Application.Idle += new EventHandler(OnIdle);//添加触发,不断刷新三个控件
             if (status.Equals("答题"))
             {
-                string sql = "select 作图题题目 from 作图题库 where id in(select 作图题题目序号 from 题组库 where 卷名=" + id + ")";
+                string sql = "select 作图题题目 from 作图题库 where id in(select 作图题题目序号 from 题组库 where 卷名=" + examName + ")";
                 OnFileOpen(sql);
             }
             if (status.Equals("修改答案"))
@@ -227,11 +233,11 @@ namespace Canvas
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "insert into testScore_" + this.id + " (姓名,画图题答案"+this.testID+") values('" + this.stuID + "',@file)";
+                sql = "insert into testScore_" + this.examName + " (姓名,画图题答案"+this.testID+") values('" + this.stuID + "',@file)";
             }
             else if (status.Equals("修改答案")) {
 
-                sql = "update testScore_" + this.id + "set 画图题答案"+this.testID+"=@file where 姓名='" + this.stuID + "'";
+                sql = "update testScore_" + this.examName + "set 画图题答案"+this.testID+"=@file where 姓名='" + this.stuID + "'";
             }
             else if (status.Equals("出题"))
             {
@@ -253,11 +259,11 @@ namespace Canvas
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "UPDATE testScore_" + this.id + " set 画图题答案"+ this.testID + "=@file where 姓名=" + this.stuID;
+                sql = "UPDATE testScore_" + this.examName + " set 画图题答案"+ this.testID + "=@file where 姓名=" + this.stuID;
             }
             else if (status.Equals("修改答案"))
             {
-                sql = "UPDATE testScore_" + this.id + " set 画图题答案"+this.testID+"=@file where 姓名=" + this.stuID;
+                sql = "UPDATE testScore_" + this.examName + " set 画图题答案"+this.testID+"=@file where 姓名=" + this.stuID;
             }
             else if (status.Equals("出题"))
             {
@@ -532,14 +538,14 @@ namespace Canvas
             this.ActiveMdiChild.Refresh();
             try
             {
-                if (id != null)
+                if (examName != null)
                 {
                     sendAnswer(status);
                 }
                 Thread.Sleep(100);
-                if (id != null)
+                if (examName != null)
                 {
-                    GetScreenCapture(id);
+                    GetScreenCapture(examName);
                     sendPic(status);
                 }
             }

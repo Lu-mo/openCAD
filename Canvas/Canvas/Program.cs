@@ -23,36 +23,48 @@ namespace Canvas
                 col = HttpUtility.ParseQueryString(queryString);
             }
             //CommonTools.Tracing.EnableTrace();
-            string status = col["status"].ToString();
-            string id;
-            string testID;
-            string stuID;
-            if (status.Equals("答题")||status.Equals("修改答案"))
+            if (col["status"] != null)
             {
-                id = col["id"].ToString();
-                testID = col["testID"].ToString();
-                stuID = col["stuID"].ToString();
+                string status = col["status"].ToString();
+                string examName;
+                string testID;
+                string stuID;
+                string stuName;
+                string className;
+                string school;
+                if (status.Equals("答题") || status.Equals("修改答案"))
+                {
+                    examName = col["examName"].ToString();
+                    testID = col["testID"].ToString();
+                    stuID = col["stuID"].ToString();
+                    stuName = col["stuName"].ToString();
+                    className = col["className"].ToString();
+                    school = col["school"].ToString();
+                }
+                else
+                {
+                    examName = "11";
+                    testID = col["testID"].ToString();
+                    //testID = "9";
+                    stuID = "11";
+                    stuName = "11";
+                    className = "11";
+                    school = "11";
+                }
+
+                string Info;
+                //xml文本比较
+                //if (CommonTools.XmlComparator.BothXmlLoader("E:\\111.cadxml", "E:\\222.cadxml", out Info) == false)
+                //    Console.WriteLine(Info);
+
+                CommonTools.Tracing.AddId(TracePaint);
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainWin(status, examName, testID, stuID, stuName, className, school));
+
+                CommonTools.Tracing.Terminate();
             }
-            else 
-            {
-                id = "11";
-                testID = col["testID"].ToString();
-                //testID = "9";
-                stuID = "11";
-            }
-          
-            string Info;
-            //xml文本比较
-            //if (CommonTools.XmlComparator.BothXmlLoader("E:\\111.cadxml", "E:\\222.cadxml", out Info) == false)
-            //    Console.WriteLine(Info);
-
-            CommonTools.Tracing.AddId(TracePaint);
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWin(status,id,testID,stuID));
-
-            CommonTools.Tracing.Terminate();
         }
     }
 }
