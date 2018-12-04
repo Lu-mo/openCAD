@@ -26,7 +26,7 @@ namespace Canvas
             //if (col["status"] != null)
             //{
             //string status = col["status"].ToString();
-                string status = "修改答案";
+                string status = "标准答案";
                 string examName;
                 string testID;
                 string stuID;
@@ -35,25 +35,25 @@ namespace Canvas
                 string school;
                 if (status.Equals("答题") || status.Equals("修改答案"))
                 {
-                //examName = col["examName"].ToString();
-                //testID = col["testID"].ToString();
-                //stuID = col["stuID"].ToString();
-                //stuName = col["stuName"].ToString();
-                //className = col["className"].ToString();
-                //school = col["school"].ToString();
-                examName = "juan10";
-                testID = "1";
-                stuID = "16240070";
-                stuName = "yxt";
-                className = "1701";
-                school = "深职院";
-                }
+                examName = col["examName"].ToString();
+                testID = col["testID"].ToString();
+                stuID = col["stuID"].ToString();
+                stuName = col["stuName"].ToString();
+                className = col["className"].ToString();
+                school = col["school"].ToString();
+                //examName = "juan10";
+                //testID = "15";
+                //stuID = "16240070";
+                //stuName = "yxt";
+                //className = "1701";
+                //school = "深职院";
+            }
                 else
                 {
                     examName = "11";
-                    testID = col["testID"].ToString();
-                    //testID = "9";
-                    stuID = "11";
+                testID = col["testID"].ToString();
+                //testID = "15";
+                stuID = "11";
                     stuName = "11";
                     className = "11";
                     school = "11";
