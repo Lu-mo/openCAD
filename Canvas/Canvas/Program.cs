@@ -23,30 +23,32 @@ namespace Canvas
                 col = HttpUtility.ParseQueryString(queryString);
             }
             //CommonTools.Tracing.EnableTrace();
-            //if (col["status"] != null)
-            //{
-            //string status = col["status"].ToString();
-                string status = "修改答案";
+            //col["status"] = "出题";
+            if (col["status"] != null)
+            {
+                string status = col["status"].ToString();
                 string examName;
                 string testID;
                 string stuID;
                 string stuName;
                 string className;
                 string school;
+                //MessageBox.Show(status);
                 if (status.Equals("答题") || status.Equals("修改答案"))
                 {
-                //examName = col["examName"].ToString();
-                //testID = col["testID"].ToString();
-                //stuID = col["stuID"].ToString();
-                //stuName = col["stuName"].ToString();
-                //className = col["className"].ToString();
-                //school = col["school"].ToString();
-                examName = "juan10";
-                testID = "1";
-                stuID = "16240070";
-                stuName = "yxt";
-                className = "1701";
-                school = "深职院";
+                    examName = col["examName"].ToString();
+                    testID = col["testID"].ToString();
+                    stuID = col["stuID"].ToString();
+                    stuName = col["stuName"].ToString();
+                    className = col["className"].ToString();
+                    school = col["school"].ToString();
+                    //examName = "juan10";
+                    //testID = "1";
+                    //stuID = "16240070";
+                    //stuName = "yxt";
+                    //className = "1701";
+                    //school = "深职院";
+                    //MessageBox.Show(examName+','+testID+','+stuID+','+stuName+','+className+school);
                 }
                 else
                 {
@@ -71,7 +73,7 @@ namespace Canvas
                 Application.Run(new MainWin(status, examName, testID, stuID, stuName, className, school));
 
                 CommonTools.Tracing.Terminate();
-            //}
+            }
         }
     }
 }

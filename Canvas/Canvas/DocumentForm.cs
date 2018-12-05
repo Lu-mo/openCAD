@@ -80,7 +80,7 @@ namespace Canvas
             Color color = Color.White;
             if (status.Equals("出题"))
             {
-                color = Color.Blue;
+                color = Color.White;
             }
             if (status.Equals("标准答案"))
             {
