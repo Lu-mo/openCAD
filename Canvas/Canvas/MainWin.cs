@@ -23,7 +23,8 @@ namespace Canvas
         string className = null;
         string school = null;
         public List<string> filePathList = new List<string>();
-        string connectionString = @"server=DESKTOP-BLPK865\SQLEXPRESS; database = CAD-题组信息; uid = sa; pwd = 123456";
+        //string connectionString = @"server=DESKTOP-BLPK865\SQLEXPRESS; database = CAD-题组信息; uid = sa; pwd = 123456";
+        string connectionString = @"server=47.104.173.249,20001\CADSYSTEM; database = CAD-题组信息; uid = sa; pwd = summercad-CAD";
         MenuItemManager m_menuItems;
         public int flag=1;
    
