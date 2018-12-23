@@ -98,7 +98,7 @@ namespace Canvas
 			if (GridStyle == eStyle.Lines)//如果是线
 			{
 				Pen pen = new Pen(m_color);
-                Pen pen1 = new Pen(Color.Blue, 2);//每10根线条第10根线条得颜色粗细
+                Pen pen1 = new Pen(Color.DarkGray, 2);//每10根线条第10根线条得颜色粗细
                 Pen pen2 = new Pen(Color.Yellow, 2);//边界线条
 				GraphicsPath path = new GraphicsPath();
                 // draw vertical lines画垂线

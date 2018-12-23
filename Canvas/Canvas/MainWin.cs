@@ -68,6 +68,7 @@ namespace Canvas
                     "exec @num = findOrderNum '"+examName+"',"+testID+" " +
                     "print @num " +
                     "select 作图题题目 from 作图题库 where id=@num";
+
                 OnFileOpen(sql);
             }
             if (status.Equals("修改答案"))
@@ -239,7 +240,8 @@ namespace Canvas
             string sql;
             if (status.Equals("答题"))
             {
-                sql = "use [CAD__"+school+"] insert into testScore_" + this.examName + " (学号,画图题答案"+this.testID+") values('" + this.stuID + "',@file)";
+                sql = "use [CAD__"+school+"] begin try " +
+                    "update testScore_" + this.examName + " set 画图题答案" + this.testID + "=@file where 学号='" + this.stuID + "'  end try begin catch insert into testScore_" + this.examName + " (学号,画图题答案" + this.testID + ",姓名,年级班级) values('" + this.stuID + "',@file,'" + stuName + "','" + className + "') end catch";
             }
             else if (status.Equals("修改答案")) {
 
