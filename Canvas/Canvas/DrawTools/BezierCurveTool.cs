@@ -11,6 +11,7 @@ namespace Canvas.DrawTools
 {
     class BezierCurveTool : INodePoint
     {
+        //图形点集
         public enum ePoint
         {
             P1,
@@ -28,6 +29,7 @@ namespace Canvas.DrawTools
         //private BezierCurve bezierCurve;
         //private ePoint p1;
 
+        //克隆当前图形，并在克隆的基础上进行修改
         public BezierCurveTool(BezierCurve owner, ePoint id)
         {
             
@@ -39,7 +41,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 获取端点
+        /// 获取被选中的端点
         /// </summary>
         /// <param name="pointid"></param>
         /// <returns></returns>
@@ -66,7 +68,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 完成？
+        /// 完成
         /// </summary>
         public void Finish()
         {
@@ -119,7 +121,7 @@ namespace Canvas.DrawTools
             SetPoint(m_pointId, m_originalPoint, m_owner);
         }
         /// <summary>
-        /// 设置端点
+        /// 设置变动后的端点端点
         /// </summary>
         /// <param name="pointid"></param>
         /// <param name="point"></param>
@@ -322,7 +324,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 获取线段端点坐标，长度和与x轴的角度
+        /// 获取图形信息用于显示在面板下方
         /// </summary>
         /// <returns></returns>
         string IDrawObject.GetInfoAsString()
@@ -387,7 +389,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 作用不清晰*
+        /// 图形控制点是否被选中
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
@@ -398,7 +400,7 @@ namespace Canvas.DrawTools
             if (HitUtil.CircleHitPoint(m_p1, thWidth, point))
             {
                 return new BezierCurveTool(this, BezierCurveTool.ePoint.P1);
-            }       
+            }
             if (HitUtil.CircleHitPoint(m_p2, thWidth, point))
                 return new BezierCurveTool(this, BezierCurveTool.ePoint.P2);
             if (HitUtil.CircleHitPoint(m_p3, thWidth, point))
@@ -428,6 +430,7 @@ namespace Canvas.DrawTools
             else
                 return false;
         }
+        //自己设置的用于获取四个点X（或Y）值最大的一个
         double getMaxOrMin(string flag, double t1, double t2, double t3, double t4)
         {
             double max = -1000;
@@ -452,10 +455,11 @@ namespace Canvas.DrawTools
 
         void IDrawObject.OnKeyDown(ICanvas canvas, KeyEventArgs e)
         {
+            //快捷键按下时启用未设置
         }
 
         /// <summary>
-        /// 按下鼠标时寻找点到直线最近距离直线上的点或距离园最近的点以角度找邻点
+        /// 按下鼠标时设置某个点的值为当前鼠标点击的店，并将其设置为当前点
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
@@ -505,7 +509,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 鼠标移动，如果按下crtl则以45度角找邻点，设置p2为邻点
+        /// 鼠标移动，当当前点是点一就会把点二值设为当前鼠标点，用以达到实时绘制图形的功能
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
@@ -604,6 +608,7 @@ namespace Canvas.DrawTools
 
         public BezierCurveEdit() { }
 
+        //获取图形名称
         public override string Id
         {
             get
@@ -714,7 +719,7 @@ namespace Canvas.DrawTools
         }
 
         /// <summary>
-        /// 复制编辑
+        /// 复制
         /// </summary>
         /// <param name="acopy"></param>
 		public new void Copy(BezierCurveEdit acopy)
@@ -724,6 +729,7 @@ namespace Canvas.DrawTools
             m_tanSnap = acopy.m_tanSnap;
             m_tanReverse = acopy.m_tanReverse;
         }
+        //克隆
         public override IDrawObject Clone()
         {
             BezierCurve b = new BezierCurve();
@@ -731,6 +737,7 @@ namespace Canvas.DrawTools
             return b;
         }
 
+        //获取贝塞尔图形对象
         public IDrawObject GetDrawObject()
         {
             return new BezierCurve(P1,P2,P3,P4,Width,Color);
